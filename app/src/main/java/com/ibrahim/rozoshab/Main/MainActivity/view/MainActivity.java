@@ -49,14 +49,20 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    setContentView(R.layout.activity_main);
                     mTextMessage.setText(R.string.title_home);
-                    return true;
+                    break;
+
                 case R.id.navigation_dashboard:
+                    setContentView(R.layout.activity_main_test);
                     mTextMessage.setText(R.string.title_dashboard);
-                    return true;
+                    break;
+
                 case R.id.navigation_notifications:
+                    setContentView(R.layout.activity_main_test2);
                     mTextMessage.setText(R.string.title_notifications);
-                    return true;
+                    break;
+
             }
             return false;
         }
