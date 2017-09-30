@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ibrahim.rozoshab.Bean.CategoryBean;
 import com.ibrahim.rozoshab.Bean.TaskBean;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 
     private TextView mTextMessage;
     MainPresenter presenter;
+    BottomNavigationView navigation ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +37,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         setContentView(R.layout.activity_main);
 
         mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+iniReportScreen();
+       // navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         presenter= new MainPresenter(this);
-
 
     }
 
@@ -50,17 +51,27 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     setContentView(R.layout.activity_main);
-                    mTextMessage.setText(R.string.title_home);
+                    //iniReportScreen();
+                    Toast.makeText(MainActivity.this, "report", Toast.LENGTH_SHORT).show();
+                    presenter.reportScreenSelected();
                     break;
 
                 case R.id.navigation_dashboard:
                     setContentView(R.layout.activity_main_test);
-                    mTextMessage.setText(R.string.title_dashboard);
+                    Toast.makeText(MainActivity.this, "nisab", Toast.LENGTH_SHORT).show();
+
+                   // initNisabScreen();
+                    presenter.nisabScreenSelected();
                     break;
 
                 case R.id.navigation_notifications:
                     setContentView(R.layout.activity_main_test2);
-                    mTextMessage.setText(R.string.title_notifications);
+                    Toast.makeText(MainActivity.this, "summary", Toast.LENGTH_SHORT).show();
+
+                    //iniSummaryScreen();
+
+                    presenter.summaryScreenSelected();
+
                     break;
 
             }
@@ -74,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     public void navigateActivity(Context context, Class<?> clss) {
 
     }
-//as/// aasas
+
     @Override
     public Activity getActivityContext() {
         return MainActivity.this;
@@ -86,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         for (CategoryBean categoryBean: categoryList){
             mTextMessage.setText(mTextMessage.getText()+categoryBean.getCategoryName()+"\n");
             mTextMessage.setTextSize(20);
+
             for (TaskBean task : tasksList ){
 
                 mTextMessage.setText(mTextMessage.getText()+task.getTaskName()+"\n");
@@ -94,4 +106,32 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
             }
         }
     }
+    @Override
+    public void initNisabScreen(){
+
+         navigation = (BottomNavigationView) findViewById(R.id.navigationTest);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        mTextMessage = (TextView) findViewById(R.id.messagetest);
+        mTextMessage.setText(R.string.title_notifications);
+
+    }
+    @Override
+    public void iniSummaryScreen(){
+
+         navigation = (BottomNavigationView) findViewById(R.id.navigationTestTwo);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        mTextMessage = (TextView) findViewById(R.id.messagetest2);
+        mTextMessage.setText(R.string.title_dashboard);
+
+    }
+
+    @Override
+    public void iniReportScreen(){
+
+         navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        mTextMessage.setText(R.string.title_home);
+
+    }
+
 }

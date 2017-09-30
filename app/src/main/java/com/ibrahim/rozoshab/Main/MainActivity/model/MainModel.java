@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Created by w-t- on 17-Sep-17.
  */
 
-public class MainModel  {
+public class MainModel implements MainActivityContractor.PresenterToModel  {
 
     Context weakContext;
     MainActivityContractor.ModelToPresenter presenter;
@@ -58,5 +58,9 @@ public class MainModel  {
     }
 
 
+    @Override
+    public void prepareSummaryData() {
 
+
+    }
 }

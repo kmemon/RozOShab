@@ -29,6 +29,13 @@ public interface MainActivityContractor {
 
         void populateData(ArrayList<CategoryBean> categoryList, ArrayList<TaskBean> tasksList);
 
+        void initNisabScreen();
+
+        void iniSummaryScreen();
+
+        void iniReportScreen();
+
+
 
 
 //        void showProgressDialog(String message);
@@ -80,11 +87,19 @@ public interface MainActivityContractor {
 
         void dispatchItemClicked(AdapterView<?> parent, View v, int position, long id);
 
+        void nisabScreenSelected();
+
+        void summaryScreenSelected();
+
+        void reportScreenSelected();
+
     }
 
 
     //Through which Presenter communicate to model , Model should implement these Methods
     interface PresenterToModel {
+
+        void prepareSummaryData();
 
 //        String getRealPathFromUri(Uri uri);
 //
@@ -100,6 +115,7 @@ public interface MainActivityContractor {
     interface ModelToPresenter {
 
         void processData(ArrayList<CategoryBean> categoryList, ArrayList<TaskBean> tasksList);
+
 //
 //        void processSavedData(Bitmap bmp, String imageString);
 //

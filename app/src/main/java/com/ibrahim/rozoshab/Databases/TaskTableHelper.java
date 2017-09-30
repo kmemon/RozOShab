@@ -12,6 +12,8 @@ import com.ibrahim.rozoshab.Bean.TaskBean;
 import com.ibrahim.rozoshab.CustomClasses.CustomMethods;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
@@ -85,6 +87,7 @@ public class TaskTableHelper {
 
 
         }
+        cursor.close();
         return taskList;
     }
     public ArrayList<TaskBean> getCurrentDayTasks (int catId){
@@ -114,10 +117,8 @@ public class TaskTableHelper {
 
 
             taskList.add(task);
-
-
-
         }
+        cursor.close();
         return taskList;
     }
 
@@ -152,6 +153,7 @@ public class TaskTableHelper {
 
 
         }
+        cursor.close();
         return taskList;
     }
 
@@ -184,6 +186,72 @@ public class TaskTableHelper {
 
 
         return false;
+    }
+
+    public int calculateQazaSalat(){
+
+
+        return 0;
+    }
+
+    public HashMap<String,ArrayList<TaskBean>> calculateWeeksData(){
+
+        Cursor cursor;
+        int weeks;
+        int days;
+        HashMap<String,ArrayList<TaskBean>> weekWiseMap = new HashMap<>();
+        ArrayList<String> monthData = new ArrayList<>();
+        ArrayList<String> weekData = new ArrayList<>();
+        String queryWeeks = "select distinct date from tbl_tasks;";
+        cursor = db.rawQuery(queryWeeks,null);
+        days = cursor.getCount();
+
+            while (cursor.moveToNext()){
+                monthData.add(cursor.getString(cursor.getColumnIndex("date")));
+        }
+
+        if (monthData.size()>20){
+            weekData = (ArrayList<String>) monthData.subList(20,monthData.size());
+            weekWiseMap.put("1",extractWeakTasks(weekData));
+
+
+        }else if(monthData.size()>13){
+
+        }
+        cursor.close();
+        return weekWiseMap;
+    }
+
+    private ArrayList<TaskBean> extractWeakTasks(ArrayList<String> weakDates){
+
+        Cursor cursor = null;
+        String queryWeeks;
+        ArrayList<TaskBean> weektasksList = new ArrayList<>();
+
+        for (String date: weakDates) {
+            queryWeeks = "select * from tbl_tasks where date = " +date;
+            cursor = db.rawQuery(queryWeeks,null);
+
+            while (cursor.moveToNext()){
+
+                TaskBean task = new TaskBean(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_CAT_ID)),
+                        cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_SUB_TASK)),
+                        cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_STATUS)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_NAME)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_DATE)),
+                        cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_TYPE)));
+
+                task.setTaskId(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_ID)));
+                weektasksList.add(task);
+
+
+
+            }
+
+
+        }
+        cursor.close();
+        return weektasksList;
     }
 
 //    public boolean updateTaskProgress(int cat,String date,TaskBean task){

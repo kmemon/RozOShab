@@ -87,6 +87,23 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
     }
 
     @Override
+    public void nisabScreenSelected() {
+
+        mView.get().initNisabScreen();
+    }
+
+    @Override
+    public void summaryScreenSelected() {
+            model.prepareSummaryData();
+            mView.get().iniSummaryScreen();
+    }
+
+    @Override
+    public void reportScreenSelected() {
+        mView.get().iniReportScreen();
+    }
+
+    @Override
     public void processData(ArrayList<CategoryBean> categoryList, ArrayList<TaskBean> tasksList) {
             mView.get().populateData(categoryList,tasksList);
 
