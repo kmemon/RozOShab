@@ -2,11 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:soulwolf="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Main.MainActivity.view.MainActivity">
+
+
+    <net.soulwolf.widget.materialradio.MaterialRadioGroup
+        android:id="@+id/radiogroup"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <net.soulwolf.widget.materialradio.MaterialRadioButton
+            android:id="@+id/radioone"
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            soulwolf:mcTextSize="6sp"
+            soulwolf:mcText="one"
+            soulwolf:mcPadding="5dp"
+            soulwolf:mcChecked="true"
+            soulwolf:mcAnimator="true"
+            soulwolf:mcTextColor="@drawable/radio_button_text_selector"
+            soulwolf:mcButton="@drawable/radio_button_boy_selector"/>
+
+        <net.soulwolf.widget.materialradio.MaterialRadioButton
+            android:id="@+id/radiotwo"
+
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_height="match_parent"
+            soulwolf:mcAnimator="true"
+            soulwolf:mcTextSize="6sp"
+            soulwolf:mcPadding="5dp"
+            soulwolf:mcText="two"
+            soulwolf:mcTextColor="@drawable/radio_button_text_selector"
+            soulwolf:mcButton="@drawable/radio_button_girl_selector"/>
+
+    </net.soulwolf.widget.materialradio.MaterialRadioGroup>
+
+
 
     <FrameLayout
         android:id="@+id/content"

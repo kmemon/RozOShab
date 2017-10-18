@@ -59,8 +59,9 @@ public class MainModel implements MainActivityContractor.PresenterToModel  {
 
 
     @Override
-    public void prepareSummaryData() {
+    public int prepareSummaryData() {
+        int qazaSalat = taskTableHelper.calculateQazaSalat();
 
-
+        return qazaSalat;
     }
 }

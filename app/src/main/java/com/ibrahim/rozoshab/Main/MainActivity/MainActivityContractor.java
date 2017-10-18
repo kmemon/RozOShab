@@ -99,7 +99,7 @@ public interface MainActivityContractor {
     //Through which Presenter communicate to model , Model should implement these Methods
     interface PresenterToModel {
 
-        void prepareSummaryData();
+        int prepareSummaryData();
 
 //        String getRealPathFromUri(Uri uri);
 //

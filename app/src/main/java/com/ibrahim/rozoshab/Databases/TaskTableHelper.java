@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.ibrahim.rozoshab.Bean.CategoryBean;
 import com.ibrahim.rozoshab.Bean.TaskBean;
+import com.ibrahim.rozoshab.CustomClasses.Constants;
 import com.ibrahim.rozoshab.CustomClasses.CustomMethods;
 
 import java.util.ArrayList;
@@ -189,9 +190,45 @@ public class TaskTableHelper {
     }
 
     public int calculateQazaSalat(){
+        HashMap<String,ArrayList<TaskBean>> weekTasks = calculateWeeksData();
+
+        int totalQazaSalat=0;
+
+        ArrayList<TaskBean> week0 = weekTasks.get("0");
+        ArrayList<TaskBean> week1 = weekTasks.get("1");
+        ArrayList<TaskBean> week2 = weekTasks.get("2");
+        ArrayList<TaskBean> week3 = weekTasks.get("3");
+        ArrayList<TaskBean> week4 = weekTasks.get("4");
 
 
-        return 0;
+        if (week0!=null)
+        totalQazaSalat+= countQazaSalatinWeek(week0);
+        if (week1!=null)
+        totalQazaSalat+= countQazaSalatinWeek(week1);
+        if (week2!=null)
+        totalQazaSalat+= countQazaSalatinWeek(week2);
+        if (week3!=null)
+        totalQazaSalat+= countQazaSalatinWeek(week3);
+        if (week4!=null)
+        totalQazaSalat+= countQazaSalatinWeek(week4);
+
+
+        return totalQazaSalat;
+    }
+
+    private int countQazaSalatinWeek(ArrayList<TaskBean> weekTasks){
+        int countQazaSalatInweek =0;
+
+        for (TaskBean task:weekTasks) {
+            if (task.getTaskType()== Constants.TASK_TYPE_SALAH){
+                if (task.getStatus() == 0) {
+                    countQazaSalatInweek++;
+                }
+            }
+        }
+
+        return countQazaSalatInweek;
+
     }
 
     public HashMap<String,ArrayList<TaskBean>> calculateWeeksData(){
@@ -210,14 +247,41 @@ public class TaskTableHelper {
                 monthData.add(cursor.getString(cursor.getColumnIndex("date")));
         }
 
+
+        if (monthData.size()>29){
+            for (int i = 30; i <monthData.size(); i++) {
+                monthData.remove(i);
+            }
+        }
+
         if (monthData.size()>20){
-            weekData = (ArrayList<String>) monthData.subList(20,monthData.size());
+            weekData = (ArrayList<String>) monthData.subList(21,monthData.size());
+            weekWiseMap.put("4",extractWeakTasks(weekData));
+
+        } if(monthData.size()>13 && monthData.size()>19){
+            weekData = (ArrayList<String>) monthData.subList(14,20);
+            weekWiseMap.put("3",extractWeakTasks(weekData));
+        }
+        if(monthData.size()>6 && monthData.size()>12){
+            weekData = (ArrayList<String>) monthData.subList(7,13);
+            weekWiseMap.put("2",extractWeakTasks(weekData));
+        }
+        if(monthData.size()>0 && monthData.size()>5){
+            weekData = (ArrayList<String>) monthData.subList(0,6);
             weekWiseMap.put("1",extractWeakTasks(weekData));
+        }
+        if (monthData.size()>0 && monthData.size()<6){
 
+//            weekData = (ArrayList<String>) monthData.subList(0,monthData.size());
+//            weekWiseMap.put("0",extractWeakTasks(weekData));
 
-        }else if(monthData.size()>13){
+            for (int i=0; i< monthData.subList(0,monthData.size()).size(); i++){
+
+                Log.i("lis",""+monthData.subList(0,monthData.size()).get(i));
+            }
 
         }
+
         cursor.close();
         return weekWiseMap;
     }
@@ -243,12 +307,7 @@ public class TaskTableHelper {
 
                 task.setTaskId(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_ID)));
                 weektasksList.add(task);
-
-
-
             }
-
-
         }
         cursor.close();
         return weektasksList;

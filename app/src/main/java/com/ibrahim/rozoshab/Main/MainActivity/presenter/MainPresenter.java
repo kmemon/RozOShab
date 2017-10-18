@@ -6,6 +6,7 @@ import android.support.compat.BuildConfig;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.ibrahim.rozoshab.Bean.CategoryBean;
 import com.ibrahim.rozoshab.Bean.TaskBean;
@@ -94,7 +95,10 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
 
     @Override
     public void summaryScreenSelected() {
-            model.prepareSummaryData();
+          int qaza =   model.prepareSummaryData();
+
+        Toast.makeText(weakContext, ""+qaza, Toast.LENGTH_SHORT).show();
+        Log.i("qaza",""+qaza);
             mView.get().iniSummaryScreen();
     }
 

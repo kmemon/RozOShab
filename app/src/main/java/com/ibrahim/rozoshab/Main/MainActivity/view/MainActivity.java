@@ -19,6 +19,10 @@ import com.ibrahim.rozoshab.Main.MainActivity.MainActivityContractor;
 import com.ibrahim.rozoshab.Main.MainActivity.presenter.MainPresenter;
 import com.ibrahim.rozoshab.R;
 
+import net.soulwolf.widget.materialradio.MaterialRadioButton;
+import net.soulwolf.widget.materialradio.MaterialRadioGroup;
+import net.soulwolf.widget.materialradio.listener.OnCheckedChangeListener;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     private TextView mTextMessage;
     MainPresenter presenter;
     BottomNavigationView navigation ;
+    MaterialRadioGroup radioGroup;
+    MaterialRadioButton materialRadioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +43,30 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         setContentView(R.layout.activity_main);
 
         mTextMessage = (TextView) findViewById(R.id.message);
-iniReportScreen();
+        radioGroup = (MaterialRadioGroup) findViewById(R.id.radiogroup);
+
+        radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(MaterialRadioGroup group, int checkedId) {
+
+                materialRadioButton = (MaterialRadioButton) findViewById(checkedId);
+
+
+                if (checkedId == R.id.radioone){
+                    Toast.makeText(MainActivity.this, "check ONe change", Toast.LENGTH_SHORT).show();
+
+                }else if (checkedId == R.id.radiotwo){
+                    Toast.makeText(MainActivity.this, "check Two change" , Toast.LENGTH_SHORT).show();
+
+
+                }
+
+
+            }
+        });
+
+
+        iniReportScreen();
        // navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         presenter= new MainPresenter(this);
 
