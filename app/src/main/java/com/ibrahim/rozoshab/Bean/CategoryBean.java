@@ -1,5 +1,7 @@
 package com.ibrahim.rozoshab.Bean;
 
+import java.util.ArrayList;
+
 /**
  * Created by w-t- on 17-Sep-17.
  */
@@ -9,6 +11,7 @@ public class CategoryBean {
     private String categoryId;
     private String categoryName;
     private String categoryStatus;
+
 
     public String getCategoryId() {
         return categoryId;

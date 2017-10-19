@@ -11,8 +11,14 @@ public class TaskBean {
     private int subTask;
     private int status;
 
+
+
     public int getTaskType() {
-        return taskType;
+       return taskType;
+
+
+
+
     }
 
     public void setTaskType(int taskType) {

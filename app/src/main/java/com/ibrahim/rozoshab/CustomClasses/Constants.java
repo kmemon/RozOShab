@@ -20,5 +20,6 @@ public class Constants {
     public static int TASK_TYPE_ATTENDANCE = 6;
 
 
+    public static int VIEW_TYPE_CATEGORY = 0;
 
 }

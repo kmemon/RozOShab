@@ -6,36 +6,33 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ibrahim.rozoshab.Bean.CategoryBean;
-import com.ibrahim.rozoshab.Bean.TaskBean;
-import com.ibrahim.rozoshab.CustomClasses.Constants;
-import com.ibrahim.rozoshab.Databases.TaskTableHelper;
 import com.ibrahim.rozoshab.Main.MainActivity.MainActivityContractor;
 import com.ibrahim.rozoshab.Main.MainActivity.presenter.MainPresenter;
+import com.ibrahim.rozoshab.Main.MainActivity.view.adapter.MainAdapter;
 import com.ibrahim.rozoshab.R;
 
 import net.soulwolf.widget.materialradio.MaterialRadioButton;
 import net.soulwolf.widget.materialradio.MaterialRadioGroup;
 import net.soulwolf.widget.materialradio.listener.OnCheckedChangeListener;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements MainActivityContractor.PresenterToView{
 
     private TextView mTextMessage;
     MainPresenter presenter;
     BottomNavigationView navigation ;
-    MaterialRadioGroup radioGroup;
+    //MaterialRadioGroup radioGroup;
     MaterialRadioButton materialRadioButton;
+    RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,32 +40,39 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         setContentView(R.layout.activity_main);
 
         mTextMessage = (TextView) findViewById(R.id.message);
-        radioGroup = (MaterialRadioGroup) findViewById(R.id.radiogroup);
-
-        radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(MaterialRadioGroup group, int checkedId) {
-
-                materialRadioButton = (MaterialRadioButton) findViewById(checkedId);
+       // radioGroup = (MaterialRadioGroup) findViewById(R.id.radiogroupfajar);
+        recyclerView = (RecyclerView) findViewById(R.id.mainRecycler);
 
 
-                if (checkedId == R.id.radioone){
-                    Toast.makeText(MainActivity.this, "check ONe change", Toast.LENGTH_SHORT).show();
-
-                }else if (checkedId == R.id.radiotwo){
-                    Toast.makeText(MainActivity.this, "check Two change" , Toast.LENGTH_SHORT).show();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
-                }
-
-
-            }
-        });
+//        radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(MaterialRadioGroup group, int checkedId) {
+//
+//                materialRadioButton = (MaterialRadioButton) findViewById(checkedId);
+//
+//
+//                if (checkedId == R.id.radioonefajar){
+//                    Toast.makeText(MainActivity.this, "check ONe change", Toast.LENGTH_SHORT).show();
+//
+//                }else if (checkedId == R.id.radiotwofajar){
+//                    Toast.makeText(MainActivity.this, "check Two change" , Toast.LENGTH_SHORT).show();
+//
+//
+//                }
+//
+//
+//            }
+//        });
 
 
         iniReportScreen();
        // navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         presenter= new MainPresenter(this);
+        presenter.viewCreated();
 
     }
 
@@ -121,19 +125,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     }
 
     @Override
-    public void populateData(ArrayList<CategoryBean> categoryList, ArrayList<TaskBean> tasksList) {
+    public void populateData(ArrayList<Object> categoryDataBeen, MainAdapter mainAdapter) {
+        recyclerView.setAdapter(mainAdapter);
 
-        for (CategoryBean categoryBean: categoryList){
-            mTextMessage.setText(mTextMessage.getText()+categoryBean.getCategoryName()+"\n");
-            mTextMessage.setTextSize(20);
 
-            for (TaskBean task : tasksList ){
 
-                mTextMessage.setText(mTextMessage.getText()+task.getTaskName()+"\n");
-                mTextMessage.setTextSize(12);
-
-            }
-        }
     }
     @Override
     public void initNisabScreen(){

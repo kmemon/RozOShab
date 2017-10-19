@@ -6,11 +6,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.ibrahim.rozoshab.Bean.CategoryBean;
+import com.ibrahim.rozoshab.Bean.CategoryDataBean;
 import com.ibrahim.rozoshab.Bean.TaskBean;
+import com.ibrahim.rozoshab.Main.MainActivity.view.adapter.MainAdapter;
 
 import java.util.ArrayList;
 
@@ -27,15 +31,13 @@ public interface MainActivityContractor {
 
         Activity getActivityContext();
 
-        void populateData(ArrayList<CategoryBean> categoryList, ArrayList<TaskBean> tasksList);
-
         void initNisabScreen();
 
         void iniSummaryScreen();
 
         void iniReportScreen();
 
-
+        void populateData(ArrayList<Object> categoryDataBeen, MainAdapter mainAdapter);
 
 
 //        void showProgressDialog(String message);
@@ -92,6 +94,14 @@ public interface MainActivityContractor {
         void summaryScreenSelected();
 
         void reportScreenSelected();
+
+        RecyclerView.ViewHolder createViewHolder(ViewGroup parent, int viewType);
+
+        void bindViewHolder(RecyclerView.ViewHolder holder, int position);
+
+        int getItemCount();
+
+        int getItemViewType(int position);
 
     }
 

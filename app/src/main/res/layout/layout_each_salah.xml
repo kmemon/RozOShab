@@ -1,0 +1,114 @@
+<LinearLayout
+    android:id="@+id/salah_main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:soulwolf="http://schemas.android.com/apk/res-auto"
+    >
+
+    <LinearLayout
+        android:id="@+id/salah_fajar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+
+        >
+
+        <LinearLayout
+            android:id="@+id/salah_fajar_layout_inner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="20dp"
+            android:weightSum="5"
+
+            >
+
+            <TextView
+                android:id="@+id/textviewfajar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:text="Fajar"
+                android:textColor="#FFF"
+                android:textSize="20dp"
+                android:textStyle="bold"
+
+                />
+
+
+            <net.soulwolf.widget.materialradio.MaterialRadioGroup
+                android:id="@+id/radiogroupfajar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+
+
+                >
+
+
+                <net.soulwolf.widget.materialradio.MaterialRadioButton
+                    android:id="@+id/radioonefajar"
+
+                    android:layout_width="20dp"
+                    android:layout_height="30dp"
+                    soulwolf:mcAnimator="true"
+                    soulwolf:mcButton="@drawable/radio_button_boy_selector"
+                    soulwolf:mcChecked="true"
+                    soulwolf:mcPadding="5dp"
+                    soulwolf:mcText="one"
+                    soulwolf:mcTextColor="@drawable/radio_button_text_selector"
+                    soulwolf:mcTextSize="6sp" />
+
+                <net.soulwolf.widget.materialradio.MaterialRadioButton
+                    android:id="@+id/radiotwofajar"
+
+                    android:layout_width="20dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    soulwolf:mcAnimator="true"
+                    soulwolf:mcButton="@drawable/radio_button_girl_selector"
+                    soulwolf:mcPadding="5dp"
+                    soulwolf:mcText="two"
+                    soulwolf:mcTextColor="@drawable/radio_button_text_selector"
+                    soulwolf:mcTextSize="6sp" />
+
+
+                <net.soulwolf.widget.materialradio.MaterialRadioButton
+                    android:id="@+id/radiothreefajar"
+
+                    android:layout_width="20dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    soulwolf:mcAnimator="true"
+                    soulwolf:mcButton="@drawable/radio_button_girl_selector"
+                    soulwolf:mcPadding="5dp"
+                    soulwolf:mcText="two"
+                    soulwolf:mcTextColor="@drawable/radio_button_text_selector"
+                    soulwolf:mcTextSize="6sp" />
+
+
+            </net.soulwolf.widget.materialradio.MaterialRadioGroup>
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#FFF" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
