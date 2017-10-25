@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.ibrahim.rozoshab.Bean.CategoryBean;
+import com.ibrahim.rozoshab.Bean.CategoryDataBean;
 import com.ibrahim.rozoshab.Bean.TaskBean;
 import com.ibrahim.rozoshab.Databases.CategoryTableHelper;
 import com.ibrahim.rozoshab.Databases.TaskTableHelper;
@@ -63,5 +64,39 @@ public class MainModel implements MainActivityContractor.PresenterToModel  {
         int qazaSalat = taskTableHelper.calculateQazaSalat();
 
         return qazaSalat;
+    }
+
+    @Override
+    public void saveData(ArrayList<Object> categoryDataBeanArrayList) {
+        for (Object categoryDataBean : categoryDataBeanArrayList){
+
+            if (categoryDataBean instanceof TaskBean){
+                taskTableHelper.updateTaskProgress((TaskBean) categoryDataBean);
+
+                Log.i("Data",((TaskBean) categoryDataBean).getTaskName() +" : "+((TaskBean) categoryDataBean).getStatus());
+
+
+            }
+        }
+    }
+
+    @Override
+    public void getTasks(String date) {
+
+        categoryList = categoryTableHelper.getCategories();
+        taskList = new ArrayList<>();
+
+        for (CategoryBean categoryBean: categoryList){
+            Log.i("cat",categoryBean.getCategoryName());
+
+            for (TaskBean task : taskTableHelper.getTasksByDate(Integer.parseInt(categoryBean.getCategoryId()),date)){
+                taskList.add(task);
+                Log.i("tasks: ",""+task.getTaskName());
+
+            }
+        }
+
+        presenter.processData(categoryList,taskList);
+
     }
 }

@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Main.MainActivity.view.MainActivity"
-    android:background="@drawable/background">
+    android:background="@drawable/bg_img"
+  >
 
 
 
@@ -47,6 +48,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="?android:attr/windowBackground"
-        app:menu="@menu/navigation" />
+        app:menu="@menu/navigation"
+        android:visibility="gone"
+
+
+        />
 
 </LinearLayout>

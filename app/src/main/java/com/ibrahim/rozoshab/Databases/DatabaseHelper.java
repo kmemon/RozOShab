@@ -34,7 +34,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static String COLUMN_TASK_NAME = "name";
     public static String COLUMN_TASK_DATE = "date";
     public static String COLUMN_TASK_TYPE = "tasks_type";
+    public static String COLUMN_TASK_QUANTITY = "quantity";
     public static String COLUMN_TASK_STATUS = "status";
+    public static String COLUMN_TASK_EXTRAS = "extra_info";
+
+
+
+
 
 
     String queryCreateCategories = "CREATE TABLE `" + TABLE_CATEGORIES + "` (\n" +
@@ -51,7 +57,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "\t`" + COLUMN_TASK_NAME + "`\tTEXT,\n" +
             "\t`" + COLUMN_TASK_DATE + "`\tTEXT,\n" +
             "\t`" + COLUMN_TASK_TYPE + "`\tINTEGER,\n" +
-            "\t`" + COLUMN_TASK_STATUS + "`\tINTEGER\n" +
+            "\t`" + COLUMN_TASK_QUANTITY + "`\tTEXT,\n" +
+            "\t`" + COLUMN_TASK_STATUS + "`\tINTEGER,\n" +
+            "\t`" + COLUMN_TASK_EXTRAS + "`\tTEXT\n" +
             ");";
 
 

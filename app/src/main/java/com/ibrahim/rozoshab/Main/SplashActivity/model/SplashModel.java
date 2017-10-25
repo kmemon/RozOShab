@@ -83,21 +83,21 @@ public class SplashModel implements SplashContractor.PresenterToModel {
 
             if(!lastInsertedTasksDate.equals(todayAsString)){
 
-                taskBeanArrayList.add(new TaskBean(1,0,0,"Fajar",todayAsString, Constants.TASK_TYPE_SALAH));
-                taskBeanArrayList.add(new TaskBean(1,0,0,"Zohor",todayAsString,Constants.TASK_TYPE_SALAH));
-                taskBeanArrayList.add(new TaskBean(1,0,0,"Asar",todayAsString,Constants.TASK_TYPE_SALAH));
-                taskBeanArrayList.add(new TaskBean(1,0,0,"Maghrib",todayAsString,Constants.TASK_TYPE_SALAH));
-                taskBeanArrayList.add(new TaskBean(1,0,0,"Isha",todayAsString,Constants.TASK_TYPE_SALAH));
-                taskBeanArrayList.add(new TaskBean(2,0,0,"Quran",todayAsString,Constants.TASK_TYPE_STUDY));
-                taskBeanArrayList.add(new TaskBean(2,0,0,"Seerat",todayAsString,Constants.TASK_TYPE_STUDY));
-                taskBeanArrayList.add(new TaskBean(2,0,0,"Book",todayAsString,Constants.TASK_TYPE_STUDY));
-                taskBeanArrayList.add(new TaskBean(3,0,0,"Member",todayAsString,Constants.TASK_TYPE_MEETING));
-                taskBeanArrayList.add(new TaskBean(3,0,0,"Volunteer",todayAsString,Constants.TASK_TYPE_MEETING));
-                taskBeanArrayList.add(new TaskBean(4,0,0,"BookDistribution",todayAsString,Constants.TASK_TYPE_DISTRIBUTION));
-                taskBeanArrayList.add(new TaskBean(5,0,0,"Family Program",todayAsString,Constants.TASK_TYPE_FAMILYPROGRAM));
-                taskBeanArrayList.add(new TaskBean(6,0,0,"Quran Circle",todayAsString,Constants.TASK_TYPE_ATTENDANCE));
-                taskBeanArrayList.add(new TaskBean(6,0,0,"Study Circle",todayAsString,Constants.TASK_TYPE_ATTENDANCE));
-                taskBeanArrayList.add(new TaskBean(6,0,0,"Members Meeting",todayAsString,Constants.TASK_TYPE_ATTENDANCE));
+                taskBeanArrayList.add(new TaskBean(1,0,0,"Fajar",todayAsString, Constants.TASK_TYPE_SALAH,"",""));
+                taskBeanArrayList.add(new TaskBean(1,0,0,"Zohor",todayAsString,Constants.TASK_TYPE_SALAH,"",""));
+                taskBeanArrayList.add(new TaskBean(1,0,0,"Asar",todayAsString,Constants.TASK_TYPE_SALAH,"",""));
+                taskBeanArrayList.add(new TaskBean(1,0,0,"Maghrib",todayAsString,Constants.TASK_TYPE_SALAH,"",""));
+                taskBeanArrayList.add(new TaskBean(1,0,0,"Isha",todayAsString,Constants.TASK_TYPE_SALAH,"",""));
+                taskBeanArrayList.add(new TaskBean(2,0,0,"Quran",todayAsString,Constants.TASK_TYPE_STUDY,"",""));
+                taskBeanArrayList.add(new TaskBean(2,0,0,"Seerat",todayAsString,Constants.TASK_TYPE_STUDY,"",""));
+                taskBeanArrayList.add(new TaskBean(2,0,0,"Book",todayAsString,Constants.TASK_TYPE_STUDY,"",""));
+                taskBeanArrayList.add(new TaskBean(3,0,0,"Member",todayAsString,Constants.TASK_TYPE_MEETING,"",""));
+                taskBeanArrayList.add(new TaskBean(3,0,0,"Volunteer",todayAsString,Constants.TASK_TYPE_MEETING,"",""));
+                taskBeanArrayList.add(new TaskBean(4,0,0,"BookDistribution",todayAsString,Constants.TASK_TYPE_DISTRIBUTION,"",""));
+                taskBeanArrayList.add(new TaskBean(5,0,0,"Family Program",todayAsString,Constants.TASK_TYPE_FAMILYPROGRAM,"",""));
+                taskBeanArrayList.add(new TaskBean(6,0,0,"Quran Circle",todayAsString,Constants.TASK_TYPE_ATTENDANCE,"",""));
+                taskBeanArrayList.add(new TaskBean(6,0,0,"Study Circle",todayAsString,Constants.TASK_TYPE_ATTENDANCE,"",""));
+                taskBeanArrayList.add(new TaskBean(6,0,0,"Members Meeting",todayAsString,Constants.TASK_TYPE_ATTENDANCE,"",""));
 
                 boolean todaytasksinserted = taskTableHelper.insertAsync(taskBeanArrayList);
 

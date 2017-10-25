@@ -9,8 +9,10 @@ public class Constants {
     public static int JAMAT = 1;
     public static int INDIVIDUAL = 2;
     public static int QAZA = 3;
+
     public static int PERSONAL = 4;
     public static int ONLINE = 5;
+    public static int PHONE =6;
 
     public static int TASK_TYPE_SALAH = 1;
     public static int TASK_TYPE_STUDY = 2;
@@ -21,5 +23,10 @@ public class Constants {
 
 
     public static int VIEW_TYPE_CATEGORY = 0;
+
+
+    public static int NOT_READ = 0;
+    public static int AFTER_TAHAJJUD = 1;
+    public static int AFTER_ESHA = 2;
 
 }

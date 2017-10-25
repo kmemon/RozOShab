@@ -76,11 +76,16 @@ public class CategoryTableHelper {
         final boolean[] res = {false};
 
         Disposable disposable = Observable.just(insert(categoryBeanArrayList)).
-                subscribeOn(Schedulers.io()).subscribe(aBoolean ->{
-             Log.i("CategoryTableHelper","CategoryAdded Response"+aBoolean);
+                subscribeOn(Schedulers.io()).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+                Log.i("CategoryTableHelper","CategoryAdded Response"+aBoolean);
                 res[0] = aBoolean;
-
+            }
         });
+
+
+
 
 
         return res[0];

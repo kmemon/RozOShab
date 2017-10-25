@@ -3,4 +3,7 @@
     <string name="title_home">Report</string>
     <string name="title_dashboard">Nisab</string>
     <string name="title_notifications">Summary</string>
+
+
+    <string name="title_calendar">Calendar</string>
 </resources>

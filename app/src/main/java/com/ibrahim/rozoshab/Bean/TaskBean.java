@@ -10,8 +10,24 @@ public class TaskBean {
     private int catId;
     private int subTask;
     private int status;
+    private String quantity;
+    private String taskExtras;
 
+    public String getQuantity() {
+        return quantity;
+    }
 
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getTaskExtras() {
+        return taskExtras;
+    }
+
+    public void setTaskExtras(String taskExtras) {
+        this.taskExtras = taskExtras;
+    }
 
     public int getTaskType() {
        return taskType;
@@ -77,13 +93,15 @@ public class TaskBean {
         this.taskDate = taskDate;
     }
 
-    public TaskBean(int catId, int subTask, int status, String taskName, String taskDate,int taskType) {
+    public TaskBean(int catId, int subTask, int status, String taskName, String taskDate, int taskType, String quantity, String taskExtras) {
         this.catId = catId;
         this.subTask = subTask;
         this.status = status;
         this.taskName = taskName;
         this.taskDate = taskDate;
         this.taskType = taskType;
+        this.quantity = quantity;
+        this.taskExtras = taskExtras;
     }
 
     public TaskBean(){

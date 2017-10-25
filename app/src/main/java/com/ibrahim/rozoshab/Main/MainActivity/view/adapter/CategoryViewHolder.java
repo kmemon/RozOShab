@@ -6,11 +6,14 @@ import android.widget.TextView;
 
 import com.ibrahim.rozoshab.R;
 
+import cn.refactor.library.SmoothCheckBox;
+
 /**
  * Created by w-t- on 19-Oct-17.
  */
 
 public class CategoryViewHolder extends RecyclerView.ViewHolder {
+
 
 
     public TextView categoryName;
@@ -19,6 +22,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
 
         categoryName = (TextView) itemView.findViewById(R.id.categoryText);
+
 
 
     }

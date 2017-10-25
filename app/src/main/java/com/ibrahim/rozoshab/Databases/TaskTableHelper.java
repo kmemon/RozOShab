@@ -48,6 +48,10 @@ public class TaskTableHelper {
             cv.put(DatabaseHelper.COLUMN_TASK_DATE,task.getTaskDate());
             cv.put(DatabaseHelper.COLUMN_CATEGORY_NAME, task.getTaskName());
             cv.put(DatabaseHelper.COLUMN_TASK_TYPE,task.getTaskType());
+            cv.put(DatabaseHelper.COLUMN_TASK_QUANTITY,task.getQuantity());
+            cv.put(DatabaseHelper.COLUMN_TASK_EXTRAS,task.getTaskExtras());
+
+
             cv.put(DatabaseHelper.COLUMN_CATEGORY_STATUS, task.getStatus());
 
             try {
@@ -79,7 +83,10 @@ public class TaskTableHelper {
                         cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_STATUS)),
                         cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_NAME)),
                         cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_DATE)),
-                        cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_TYPE)));
+                        cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_TYPE)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_QUANTITY)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_EXTRAS))
+                );
 
                 task.setTaskId(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_ID)));
 
@@ -112,7 +119,10 @@ public class TaskTableHelper {
                     cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_STATUS)),
                     cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_NAME)),
                     cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_DATE)),
-                    cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_TYPE)));
+                    cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_TYPE)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_QUANTITY)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_EXTRAS))
+                    );
 
             task.setTaskId(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_ID)));
 
@@ -128,7 +138,7 @@ public class TaskTableHelper {
         ArrayList<TaskBean> taskList =new ArrayList<>();
         String queryGetTasks ="select * from "+DatabaseHelper.TABLE_TASKS
                 +" where "+DatabaseHelper.COLUMN_CAT_ID +" = "+catId + " AND " +
-                DatabaseHelper.COLUMN_TASK_DATE +" = "+ date;
+                DatabaseHelper.COLUMN_TASK_DATE +" = '"+ date + "'";
         Log.i("query",queryGetTasks);
 
 
@@ -137,26 +147,38 @@ public class TaskTableHelper {
 
 
 
-        while (cursor.moveToNext()){
+        if (cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
 
-            TaskBean task = new TaskBean(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_CAT_ID)),
-                    cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_SUB_TASK)),
-                    cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_STATUS)),
-                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_NAME)),
-                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_DATE)),
-                    cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_TYPE)));
+                TaskBean task = new TaskBean(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_CAT_ID)),
+                        cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_SUB_TASK)),
+                        cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_STATUS)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_NAME)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_DATE)),
+                        cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_TYPE)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_QUANTITY)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_EXTRAS))
+                );
 
-            task.setTaskId(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_ID)));
+                task.setTaskId(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_ID)));
 
 
-            taskList.add(task);
+                taskList.add(task);
+
+
+            }
+            cursor.close();
+            return taskList;
+
+        }else {
+            insertAsync(CustomMethods.getRawTasksByDate(date));
+            return getTasksByDate(catId,date);
 
 
 
         }
-        cursor.close();
-        return taskList;
-    }
+
+        }
 
 
     public boolean insertAsync(ArrayList<TaskBean> taskList){
@@ -164,11 +186,16 @@ public class TaskTableHelper {
         final boolean[] res = {false};
 
         Disposable disposable = Observable.just(insert(taskList)).
-                subscribeOn(Schedulers.io()).subscribe(aBoolean ->{
-            Log.i("CategoryTableHelper","CategoryAdded Response"+aBoolean);
-            res[0] = aBoolean;
+                subscribeOn(Schedulers.io()).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
 
-        });
+                Log.i("CategoryTableHelper", "CategoryAdded Response" + aBoolean);
+                res[0] = aBoolean;
+                                                           }
+                                                       });
+
+
 
 
         return res[0];
@@ -180,6 +207,9 @@ public class TaskTableHelper {
 
         cv.put(DatabaseHelper.COLUMN_TASK_STATUS,task.getStatus());
         cv.put(DatabaseHelper.COLUMN_SUB_TASK, task.getSubTask());
+        cv.put(DatabaseHelper.COLUMN_TASK_QUANTITY, task.getQuantity());
+        cv.put(DatabaseHelper.COLUMN_TASK_EXTRAS, task.getTaskExtras());
+
 
         if(!db.inTransaction()){
             db.update(DatabaseHelper.TABLE_TASKS,cv,DatabaseHelper.COLUMN_TASK_ID + " = " + task.getTaskId() ,null);
@@ -303,7 +333,10 @@ public class TaskTableHelper {
                         cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_STATUS)),
                         cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_NAME)),
                         cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_DATE)),
-                        cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_TYPE)));
+                        cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_TYPE)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_QUANTITY)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_EXTRAS))
+                );
 
                 task.setTaskId(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_ID)));
                 weektasksList.add(task);

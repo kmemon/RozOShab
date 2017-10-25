@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,6 +16,7 @@ import com.ibrahim.rozoshab.Bean.CategoryBean;
 import com.ibrahim.rozoshab.Bean.CategoryDataBean;
 import com.ibrahim.rozoshab.Bean.TaskBean;
 import com.ibrahim.rozoshab.Main.MainActivity.view.adapter.MainAdapter;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.ArrayList;
 
@@ -39,6 +41,11 @@ public interface MainActivityContractor {
 
         void populateData(ArrayList<Object> categoryDataBeen, MainAdapter mainAdapter);
 
+        void showDatePicker();
+
+        void navigateActivity(Intent intent);
+
+        String showSpinnerDialog(ArrayList<String> data,ArrayList<String> data2, String title, int position);
 
 //        void showProgressDialog(String message);
 //
@@ -103,6 +110,12 @@ public interface MainActivityContractor {
 
         int getItemViewType(int position);
 
+        void onOptionItemSelected(MenuItem item);
+
+        void onDateSelected(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth);
+
+
+        void studyDetailSelected(String selectedItem, String selectedItem2, int dataPosition, int selectedPositionOne, int positionOne);
     }
 
 
@@ -110,6 +123,11 @@ public interface MainActivityContractor {
     interface PresenterToModel {
 
         int prepareSummaryData();
+
+        void saveData(ArrayList<Object> categoryDataBeanArrayList);
+
+        void getTasks(String date);
+
 
 //        String getRealPathFromUri(Uri uri);
 //
