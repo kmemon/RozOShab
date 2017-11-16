@@ -14,6 +14,18 @@ public class Constants {
     public static int ONLINE = 5;
     public static int PHONE =6;
 
+    public static int NOT_READ = 7;
+    public static int READ_TAFSEER = 8;
+    public static int READ_RECITATION = 9;
+    public static int READ_ONLY = 10;
+
+    public static int BOOK_DISTRIBUTION = 11;
+    public static int FAMILY_PROGRAM = 12;
+    public static int QURAN_CIRCLE = 13;
+    public static int STUDY_CIRCLE = 14;
+    public static int MEMBERS_MEETING = 15;
+
+
     public static int TASK_TYPE_SALAH = 1;
     public static int TASK_TYPE_STUDY = 2;
     public static int TASK_TYPE_MEETING = 3;
@@ -21,12 +33,9 @@ public class Constants {
     public static int TASK_TYPE_FAMILYPROGRAM = 5;
     public static int TASK_TYPE_ATTENDANCE = 6;
 
-
     public static int VIEW_TYPE_CATEGORY = 0;
 
+    public static String FILE_NAME = "RozoShab Report.xls";
 
-    public static int NOT_READ = 0;
-    public static int AFTER_TAHAJJUD = 1;
-    public static int AFTER_ESHA = 2;
 
 }

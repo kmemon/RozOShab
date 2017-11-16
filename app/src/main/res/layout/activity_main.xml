@@ -11,9 +11,26 @@
   >
 
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       >
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:titleTextColor="#FFF"
+            />
 
-    <FrameLayout
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -23,10 +40,25 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/mainRecycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             >
 
         </android.support.v7.widget.RecyclerView>
+
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mainRecycler"
+            android:text="Save"
+            android:textColor="#FFF"
+            android:textStyle="bold"
+            android:background="@drawable/circular_border"
+            android:layout_margin="10dp"
+
+
+            />
 
 
         <TextView
@@ -40,7 +72,8 @@
             android:visibility="gone"
             />
 
-    </FrameLayout>
+    </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

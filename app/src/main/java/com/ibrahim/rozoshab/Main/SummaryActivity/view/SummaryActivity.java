@@ -1,6 +1,8 @@
 package com.ibrahim.rozoshab.Main.SummaryActivity.view;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.ibrahim.rozoshab.CustomClasses.Constants;
 import com.ibrahim.rozoshab.CustomClasses.WriteExcel;
 import com.ibrahim.rozoshab.R;
 
@@ -63,17 +66,17 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
     }
     void exportReport(){
 
-        saveExcelFile(this,"sampleExcel.xls");
+        saveExcelFile(this, Constants.FILE_NAME);
 
     }
 
     private void saveExcelFile(SummaryActivity summaryActivity, String sampleExcel) {
 
-        WriteExcel test = new WriteExcel(this);
-        test.setOutputFile(sampleExcel);
+        WriteExcel test = new WriteExcel(this,sampleExcel);
+        //test.setOutputFile(sampleExcel);
         try {
             test.prepareData();
-            test.write();
+           test.write();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (WriteException e) {
@@ -84,6 +87,25 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     void sendReport(){
+
+        exportReport();
+
+        File filelocation = new File(Environment.getExternalStorageDirectory(),Constants.FILE_NAME);
+
+        Uri path = Uri.fromFile(filelocation);
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        // set the type to 'email'
+        emailIntent.setType("vnd.android.cursor.dir/email");
+        String to[] = {"ibrahimarain15@gmail.com"};
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
+        // the attachment
+        emailIntent.putExtra(Intent.EXTRA_STREAM, path);
+        // the mail subject
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "RozoShab Report");
+        String desc = "Monthly Roz o shab";
+        emailIntent.putExtra(Intent.EXTRA_TEXT, desc);
+
+        startActivity(Intent.createChooser(emailIntent, "Send email..."));
 
 
     }

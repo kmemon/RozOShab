@@ -50,8 +50,6 @@ public class TaskTableHelper {
             cv.put(DatabaseHelper.COLUMN_TASK_TYPE,task.getTaskType());
             cv.put(DatabaseHelper.COLUMN_TASK_QUANTITY,task.getQuantity());
             cv.put(DatabaseHelper.COLUMN_TASK_EXTRAS,task.getTaskExtras());
-
-
             cv.put(DatabaseHelper.COLUMN_CATEGORY_STATUS, task.getStatus());
 
             try {
@@ -98,6 +96,7 @@ public class TaskTableHelper {
         cursor.close();
         return taskList;
     }
+
     public ArrayList<TaskBean> getCurrentDayTasks (int catId){
 
         ArrayList<TaskBean> taskList =new ArrayList<>();
@@ -345,6 +344,28 @@ public class TaskTableHelper {
         cursor.close();
         return weektasksList;
     }
+
+    public ArrayList<String> getAllDays(){
+
+        ArrayList<String> distinctDates = new ArrayList<>();
+
+        String query = "select distinct date from tbl_tasks order by date";
+
+        Cursor cursor = db.rawQuery(query,null);
+
+        if (cursor.getCount() > 0){
+            while (cursor.moveToNext()){
+
+                distinctDates.add(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_DATE)));
+
+            }
+
+        }
+
+        return distinctDates;
+
+    }
+
 
 //    public boolean updateTaskProgress(int cat,String date,TaskBean task){
 //

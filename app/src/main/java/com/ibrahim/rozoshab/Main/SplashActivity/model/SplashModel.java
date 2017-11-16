@@ -26,8 +26,14 @@ public class SplashModel implements SplashContractor.PresenterToModel {
     SharedPreferenceHelper sharedPreferenceHelper;
     ArrayList<CategoryBean> categoryBeanArrayList;
     ArrayList<TaskBean> taskBeanArrayList;
+    // ni is arraylist m taskbean class k object jaengy islye likha hua h ye , jab string jaty hin to string likhy hain
+    //or task bean wo class jo abi dikhait th, to usky objects m data hta h har task ka combine
+    //apko b yehi krna hga k ak class banao usmy wo sab variable or unky getter setter banao jo variable required hain database m
+    //dalny hain jo
 
+    //wo class dikhaun ab ???  constructor pata h kia hta h han pata hai mein kon c calss banaon       yahi taskbeanwali
 
+    // is wali clas ko khol k dekho ab kon c yah jo open hai , ni taskbean  yar me fail hun
 
 
     public SplashModel(SplashContractor.ModelToPresenter mPresenter, Context weakContext){

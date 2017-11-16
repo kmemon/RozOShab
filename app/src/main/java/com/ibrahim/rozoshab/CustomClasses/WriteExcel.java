@@ -7,10 +7,14 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
+import com.ibrahim.rozoshab.Bean.CategoryBean;
+import com.ibrahim.rozoshab.Bean.TaskBean;
+import com.ibrahim.rozoshab.Databases.CategoryTableHelper;
 import com.ibrahim.rozoshab.Databases.TaskTableHelper;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import jxl.CellView;
@@ -20,6 +24,7 @@ import jxl.format.UnderlineStyle;
 import jxl.write.Formula;
 import jxl.write.Label;
 import jxl.write.Number;
+import jxl.write.WritableCellFeatures;
 import jxl.write.WritableCellFormat;
 import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
@@ -33,47 +38,234 @@ public class WriteExcel {
 
     private WritableCellFormat timesBoldUnderline;
     private WritableCellFormat times;
-    private String inputFile;
+   // private String inputFile;
     Context context;
     TaskTableHelper taskTableHelper;
+    CategoryTableHelper categoryTableHelper;
+    File file;
+    int count1 = 0,count2 = 1, count3 = 1;
 
+    WritableWorkbook workbook ;
+    WritableSheet excelSheet ;
+    WorkbookSettings wbSettings;
 
-
-    public WriteExcel(Context context){
+    public WriteExcel(Context context,String inputFile){
         this.context =  context;
         taskTableHelper = new TaskTableHelper(context);
-        prepareData();
+        categoryTableHelper = new CategoryTableHelper(context);
+        File file = new File(Environment.getExternalStorageDirectory(),inputFile);
+        this.file = file;
+
+        wbSettings = new WorkbookSettings();
+        //prepareData();
 
     }
 
     public void prepareData(){
 
 
+        try {
+            workbook = Workbook.createWorkbook(file, wbSettings);
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        workbook.createSheet("Report", 0);
+        excelSheet = workbook.getSheet(0);
+
+        
+        ArrayList<String> distinctDates = taskTableHelper.getAllDays();
+        ArrayList<CategoryBean> categories = categoryTableHelper.getCategories();
+
+        try {
+            createLabel(excelSheet);
+        } catch (WriteException e) {
+            e.printStackTrace();
+        }
+
+
+        for (int i = 0; i <distinctDates.size(); i++) {
+
+            try {
+
+                addCaption(excelSheet,i+2,0,"0"+(i+1));
+
+                Log.i("addcaptioon","column 0 Row"+count1 +"Value ="+distinctDates.get(i));
+                count1++;
+
+            } catch (WriteException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        for (int j = 0;j< categories.size()  ; j++) {
+            //add categoryName Here
+            try {
+                // createLabel(excelSheet);
+                addLabel(excelSheet, 0, count2, categories.get(j).getCategoryName());
+                Log.i("addLabel", "column 0 Row" + count2 + "Value =" + categories.get(j).getCategoryName());
+
+                // count2++;
+                //   if (count2<categories.size())
+
+            } catch (WriteException e) {
+                e.printStackTrace();
+            }
+
+            ArrayList<TaskBean> tasks = taskTableHelper.getTasksByDate(Integer.parseInt(categories.get(j).getCategoryId()),
+                    CustomMethods.getCurrentDate());
+
+            for (int k = 0; k < tasks.size(); k++) {
+                //write Tasks here
+                try {
+                    addLabel(excelSheet, 1, count3, tasks.get(k).getTaskName());
+
+                    Log.i("addLabel", "column 0 Row" + count3 + "Value =" + tasks.get(k).getTaskName());
+                    //   if (count3<tasks.size())
+                    count2 = count3+1;
+                    count3++;
+                } catch (WriteException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        for (int i = 0; i < distinctDates.size(); i++) {
+            count3 = 1;
+
+            for (int j = 0;j< categories.size()  ; j++) {
+
+                ArrayList<TaskBean> tasks = taskTableHelper.getTasksByDate(Integer.parseInt(categories.get(j).getCategoryId()),
+                        distinctDates.get(i));
+
+                for (int k = 0; k <tasks.size() ; k++) {
+                    //write Tasks here
+                    try {
+
+                        String stringToWrite=" ";
+
+                        if (tasks.get(k).getStatus()==1){
+                            stringToWrite="";
+
+                            switch (tasks.get(k).getSubTask()){
+
+                                case 1:{
+                                    stringToWrite = "J";
+                                    break;
+                                }
+                                case 2:{
+                                    stringToWrite = "I";
+                                    break;
+                                }
+                                case 3:{
+                                    stringToWrite = "Q";
+                                    break;
+                                }
+                                case 4:{
+                                    stringToWrite = "PR";
+                                    break;
+                                }
+                                case 5:{
+                                    stringToWrite = "O";
+                                    break;
+                                }
+                                case 6:{
+                                    stringToWrite = "PH";
+                                    break;
+                                }
+
+                                case 7:{
+                                    stringToWrite = " ";
+                                    break;
+                                }
+                                case 8:{
+                                    stringToWrite = "T";//"AFTER TAHAJJUD";
+                                    break;
+                                }
+                                case 9:{
+                                    stringToWrite = "R";//"AFTER ESHA";
+                                    break;
+                                }
+                                case 10:{
+                                    stringToWrite = "R";
+                                    break;
+                                }
+                                case 11:{
+                                    stringToWrite = "Y";
+                                    break;
+                                }
+                                case 12:{
+                                    stringToWrite = "Y";
+                                    break;
+                                }
+                                case 13:{
+                                    stringToWrite = "Y";
+                                    break;
+                                }
+                                case 14:{
+                                    stringToWrite = "Y";
+                                    break;
+                                }
+                                case 15:{
+                                    stringToWrite = "Y";
+                                    break;
+                                }
+                            }
+                        }
+
+
+                        addLabel(excelSheet,i+2,count3,stringToWrite);
+
+                        Log.i("addLabel","column 0 Row"+count3 +"Value ="+tasks.get(k).getTaskName());
+                         count3++;
+
+                    } catch (WriteException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+
+            }
+
+        }
+
+        try {
+            workbook.write();
+            workbook.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (WriteException e) {
+            e.printStackTrace();
+        }
 
 
     }
 
 
-    public void setOutputFile(String inputFile) {
-        this.inputFile = inputFile;
-    }
+//    public void setOutputFile(String inputFile) {
+//        this.inputFile = inputFile;
+//    }
 
     public void write() throws IOException, WriteException {
-        File file = new File(Environment.getExternalStorageDirectory(),inputFile);
-        WorkbookSettings wbSettings = new WorkbookSettings();
 
-        wbSettings.setLocale(new Locale("en", "EN"));
-
-        WritableWorkbook workbook = Workbook.createWorkbook(file, wbSettings);
-        workbook.createSheet("Report", 0);
-        WritableSheet excelSheet = workbook.getSheet(0);
-
-        createLabel(excelSheet);
-        createContent(excelSheet);
-
-        workbook.write();
-        workbook.close();
+//        File file = new File(Environment.getExternalStorageDirectory(),inputFile);
+//        WorkbookSettings wbSettings = new WorkbookSettings();
+//
+//        wbSettings.setLocale(new Locale("en", "EN"));
+//
+//        WritableWorkbook workbook = Workbook.createWorkbook(file, wbSettings);
+//        workbook.createSheet("Report", 0);
+//        WritableSheet excelSheet = workbook.getSheet(0);
+//
+//        createLabel(excelSheet);
+//        createContent(excelSheet);
+//
+//        workbook.write();
+//        workbook.close();
 
 
         Log.i("created","FileCreated" + file.getPath());
@@ -102,8 +294,8 @@ public class WriteExcel {
         cv.setAutosize(true);
 
         // Write a few headers
-        addCaption(sheet, 0, 0, "Header 1");
-        addCaption(sheet, 1, 0, "This is another header");
+      //  addCaption(sheet, 0, 0, "Header 1");
+       // addCaption(sheet, 1, 0, "This is another header");
 
 
     }
@@ -140,7 +332,12 @@ public class WriteExcel {
             throws RowsExceededException, WriteException {
         Label label;
         label = new Label(column, row, s, timesBoldUnderline);
+
         sheet.addCell(label);
+
+
+
+
     }
 
     private void addNumber(WritableSheet sheet, int column, int row,

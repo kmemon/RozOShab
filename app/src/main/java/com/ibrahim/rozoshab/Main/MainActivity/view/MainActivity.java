@@ -13,12 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements
-        MainActivityContractor.PresenterToView,DatePickerDialog.OnDateSetListener{
+        MainActivityContractor.PresenterToView,DatePickerDialog.OnDateSetListener,View.OnClickListener{
 
     private TextView mTextMessage;
     MainPresenter presenter;
@@ -47,11 +49,15 @@ public class MainActivity extends AppCompatActivity implements
     DatePickerDialog datePickerDialog;
     int year =2017, month =0, day =1;
     Calendar calendar;
+    Button btn_submit;
+    Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         calendar =  Calendar.getInstance();
 
         year =  calendar.get(Calendar.YEAR);
@@ -63,24 +69,21 @@ public class MainActivity extends AppCompatActivity implements
 
         showDebugDBAddressLogToast();
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        btn_submit = (Button) findViewById(R.id.btn_submit);
+        btn_submit.setOnClickListener(this);
         mTextMessage = (TextView) findViewById(R.id.message);
        // radioGroup = (MaterialRadioGroup) findViewById(R.id.radiogroupfajar);
         recyclerView = (RecyclerView) findViewById(R.id.mainRecycler);
 
-
+        recyclerView.setNestedScrollingEnabled(false);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
         getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar));
-
-
-
-
-
-
-
 
         iniReportScreen();
        // navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -115,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements
                 Method getAddressLog = debugDB.getMethod("getAddressLog");
                 Object value = getAddressLog.invoke(null);
 
-                Toast.makeText(MainActivity.this, ""+value, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, ""+value, Toast.LENGTH_SHORT).show();
 
                 Log.i("------", "ip_address: " + value);
             } catch (Exception ignore) {
@@ -239,25 +242,38 @@ public class MainActivity extends AppCompatActivity implements
         presenter.onDateSelected(view,year,monthOfYear,dayOfMonth);
     }
     @Override
-    public String showSpinnerDialog(ArrayList<String> data1,ArrayList<String> data2,String title, final int position) {
+    public String showSpinnerDialog(final ArrayList<String> data1, final ArrayList<String> data2, String title, final int position) {
 
-        String slectItem = "";
+        final String slectItem = "";
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(title);
         View mview = getLayoutInflater().inflate(R.layout.spinner_layout, null);
 
         final Spinner spinner = (Spinner) mview.findViewById(R.id.dialogapinner);
         final Spinner spinner2 = (Spinner) mview.findViewById(R.id.dialogapinnerTwo);
 
+        if (data1!=null && data2!=null){
+            ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data1);
+            ArrayAdapter<String> stringArrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data2);
 
 
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data1);
-        ArrayAdapter<String> stringArrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data2);
+            spinner.setAdapter(stringArrayAdapter);
+            spinner2.setAdapter(stringArrayAdapter2);
+        }else if (data1==null){
+            spinner.setVisibility(View.GONE);
+            ArrayAdapter<String> stringArrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data2);
+            spinner2.setAdapter(stringArrayAdapter2);
+
+        }else if (data2==null){
+            spinner2.setVisibility(View.GONE);
+            ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data1);
+            spinner.setAdapter(stringArrayAdapter);
+
+        }
 
 
-        spinner.setAdapter(stringArrayAdapter);
-        spinner2.setAdapter(stringArrayAdapter2);
+
 
 
 
@@ -265,14 +281,31 @@ public class MainActivity extends AppCompatActivity implements
         builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String selectedItem1 = spinner.getSelectedItem().toString();
-                String selectedItem2 = spinner2.getSelectedItem().toString();
 
-                int selectedPositionOne = spinner.getSelectedItemPosition();
-                int selectedPositionTwo = spinner2.getSelectedItemPosition();
+                if (data1!=null && data2!=null) {
 
-                presenter.studyDetailSelected(selectedItem1,selectedItem2,position,selectedPositionOne,selectedPositionTwo);
+                    String selectedItem1 = spinner.getSelectedItem().toString();
+                    String selectedItem2 = spinner2.getSelectedItem().toString();
 
+                    int selectedPositionOne = spinner.getSelectedItemPosition();
+                    int selectedPositionTwo = spinner2.getSelectedItemPosition();
+
+
+                    presenter.studyDetailSelected(selectedItem1, selectedItem2, position, selectedPositionOne, selectedPositionTwo);
+
+                }else if (data1==null){
+
+                    String selectedItem2 = spinner2.getSelectedItem().toString();
+                    int selectedPositionTwo = spinner2.getSelectedItemPosition();
+                    presenter.studyDetailSelected("", selectedItem2, position, 0, selectedPositionTwo);
+
+
+                }else if (data2==null){
+                    String selectedItem1 = spinner.getSelectedItem().toString();
+                    int selectedPositionOne = spinner.getSelectedItemPosition();
+                    presenter.studyDetailSelected(selectedItem1, "", position, selectedPositionOne, 0);
+
+                }
             }
         });
 
@@ -282,4 +315,10 @@ public class MainActivity extends AppCompatActivity implements
         return slectItem;
     }
 
+    @Override
+    public void onClick(View v) {
+        presenter.viewbuttonClicked(v.getId());
+
+
+    }
 }

@@ -44,12 +44,8 @@
                 android:id="@+id/circle_check_box"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-
-                app:color_checked="#E91E63"
-
-
-
-                />
+                app:color_checked="#388E3C"
+            />
 
 
 

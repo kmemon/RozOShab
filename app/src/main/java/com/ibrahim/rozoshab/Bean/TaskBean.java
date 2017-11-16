@@ -32,9 +32,6 @@ public class TaskBean {
     public int getTaskType() {
        return taskType;
 
-
-
-
     }
 
     public void setTaskType(int taskType) {
@@ -93,7 +90,10 @@ public class TaskBean {
         this.taskDate = taskDate;
     }
 
-    public TaskBean(int catId, int subTask, int status, String taskName, String taskDate, int taskType, String quantity, String taskExtras) {
+
+    public TaskBean(int catId, int subTask, int status, String taskName, String taskDate,
+                    int taskType, String quantity, String taskExtras) {
+
         this.catId = catId;
         this.subTask = subTask;
         this.status = status;

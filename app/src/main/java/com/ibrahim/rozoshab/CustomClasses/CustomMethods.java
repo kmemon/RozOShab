@@ -69,7 +69,10 @@ public class CustomMethods {
         ArrayList<TaskBean> taskBeanArrayList;
         taskBeanArrayList = new ArrayList<>();
         String todayAsString = date;
+        //ak or chees dekho
 
+//        TaskBean task1 = new TaskBean(1,0,0,"Fajar",todayAsString, Constants.TASK_TYPE_SALAH,"","");
+//       taskBeanArrayList.add(task1);
         taskBeanArrayList.add(new TaskBean(1,0,0,"Fajar",todayAsString, Constants.TASK_TYPE_SALAH,"",""));
         taskBeanArrayList.add(new TaskBean(1,0,0,"Zohor",todayAsString,Constants.TASK_TYPE_SALAH,"",""));
         taskBeanArrayList.add(new TaskBean(1,0,0,"Asar",todayAsString,Constants.TASK_TYPE_SALAH,"",""));

@@ -4,8 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     tools:context="com.ibrahim.rozoshab.Main.SummaryActivity.view.SummaryActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:titleTextColor="#FFF"
+            app:title="Export"
+            />
+
+    </android.support.design.widget.AppBarLayout>
 
     <Button
         android:id="@+id/btn_export"
@@ -13,6 +28,9 @@
         android:layout_height="wrap_content"
         android:text="Export Report"
         android:layout_centerInParent="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+
 
         />
 
@@ -22,6 +40,10 @@
         android:layout_height="wrap_content"
         android:text="Send Report"
         android:layout_below="@id/btn_export"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+
+
 
         />
 

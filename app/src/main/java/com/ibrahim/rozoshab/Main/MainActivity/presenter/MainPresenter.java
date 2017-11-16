@@ -1,5 +1,6 @@
 package com.ibrahim.rozoshab.Main.MainActivity.presenter;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.ibrahim.rozoshab.Bean.CategoryBean;
 import com.ibrahim.rozoshab.Bean.TaskBean;
 import com.ibrahim.rozoshab.CustomClasses.Constants;
@@ -86,6 +89,33 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
     public void viewCreated() {
 
 
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+//                Toast.makeText(weakContext, "Permission Granted", Toast.LENGTH_SHORT).show();
+                Log.i("permission", "onPermissionGranted: " );
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+//                Toast.makeText(weakContext, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+                Log.i("permission", "onPermissionDenied: " );
+
+
+                ((Activity)weakContext).finish();
+
+            }
+
+
+        };
+
+        TedPermission.with(weakContext)
+                .setPermissionListener(permissionlistener)
+                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                .check();
+
+
     }
 
     @Override
@@ -97,6 +127,7 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
     public void viewbuttonClicked(int id) {
 
         model.saveData(categoryDataBeanArrayList);
+        Toast.makeText(weakContext, "Data saved", Toast.LENGTH_SHORT).show();
 
 
     }
@@ -188,12 +219,12 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
 
 
         }else if(holder.getItemViewType()==Constants.TASK_TYPE_SALAH || holder.getItemViewType()==Constants.TASK_TYPE_MEETING){
+
             SalatViewHolder salatViewHolder = (SalatViewHolder) holder;
             TaskBean taskBean = (TaskBean) categoryDataBeanArrayList.get(position);
             salatViewHolder.salatName.setText( taskBean.getTaskName());
 
             updateViews(salatViewHolder,position);
-
 
             salatViewHolder.salartRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
                 @Override
@@ -203,8 +234,46 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
                 }
             });
 
-        }
-        else if(holder.getItemViewType()==Constants.TASK_TYPE_STUDY){
+            if (holder.getItemViewType()==Constants.TASK_TYPE_MEETING){
+                salatViewHolder.radioButtonJamat.setButtonDrawable(weakContext.getResources().
+                        getDrawable(R.drawable.radio_button_personal_selector));
+
+                salatViewHolder.radioButtonIndividual.setButtonDrawable(weakContext.getResources().
+                        getDrawable(R.drawable.radio_button_online_selector));
+
+                salatViewHolder.radioButtonQaza.setButtonDrawable(weakContext.getResources().
+                        getDrawable(R.drawable.radio_button_phone_selector));
+
+
+                salatViewHolder.salartRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(MaterialRadioGroup group, int checkedId) {
+                        onTaskCheckChange(checkedId,position);
+
+                        ArrayList<String> arrayList = new ArrayList<String>();
+                        for (int i = 0; i < 10; i++) {
+
+                            arrayList.add("" + i + 1);
+                        }
+
+                        if (categoryDataBeanArrayList.get(position) instanceof TaskBean){
+
+                            String taskName = ((TaskBean) categoryDataBeanArrayList.get(position)).getTaskName();
+
+                                if(taskName.equalsIgnoreCase("Member") ||
+                                        taskName.equalsIgnoreCase("Volunteer")){
+                                    populateMeetingData(position);
+                                }
+                        }
+
+                    }
+                });
+
+
+
+            }
+
+        } else if(holder.getItemViewType()==Constants.TASK_TYPE_STUDY){
 
             final StudyViewHolder studyViewHolder = (StudyViewHolder) holder;
             TaskBean taskBean = (TaskBean) categoryDataBeanArrayList.get(position);
@@ -218,8 +287,27 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
                     studyViewHolder.studyCheckBox.setVisibility(View.VISIBLE);
                     studyViewHolder.studyCheckBox.setChecked(true);
 
+               }
+            }
 
-                }
+            final String taskName = ((TaskBean) categoryDataBeanArrayList.get(position)).getTaskName();
+            if (taskName.equalsIgnoreCase("Quran")){
+
+            }
+
+            else if (taskName.equalsIgnoreCase("Seerat")){
+                studyViewHolder.radioButtonTafseer.setVisibility(View.INVISIBLE);
+                studyViewHolder.radioButtonRecitation.setVisibility(View.GONE);
+                studyViewHolder.getRadioButtonReadOnly.setVisibility(View.VISIBLE);
+
+            }
+
+            else if (taskName.equalsIgnoreCase("Book")){
+                studyViewHolder.radioButtonTafseer.setVisibility(View.INVISIBLE);
+                studyViewHolder.radioButtonRecitation.setVisibility(View.GONE);
+                studyViewHolder.getRadioButtonReadOnly.setVisibility(View.VISIBLE);
+
+
             }
 
 
@@ -242,28 +330,20 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
 
                         String taskName = ((TaskBean) categoryDataBeanArrayList.get(position)).getTaskName();
 
-                        if (taskName.equalsIgnoreCase("Quran")){
-                            populateQuanData(position);
+                        if (checkedId!=R.id.radio_not_read) {
+                            if (taskName.equalsIgnoreCase("Quran")) {
+                                populateQuanData(position);
 
-                        }
-
-                        else if (taskName.equalsIgnoreCase("Seerat")){
+                            } else if (taskName.equalsIgnoreCase("Seerat")) {
                                 populateHadeesData(position);
+                            } else if (taskName.equalsIgnoreCase("Book")) {
+                                populateBookData(position);
+
+                            }else if(taskName.equalsIgnoreCase("Member")){
+                                populateMeetingData(position);
+                            }
                         }
-
-                        else if (taskName.equalsIgnoreCase("Book")){
-                            populateBookData(position);
-
-                        }
-
-
-
                     }
-
-
-
-
-
 
                 }
             });
@@ -272,33 +352,71 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
                 @Override
                 public void onCheckedChanged(SmoothCheckBox checkBox, boolean isChecked) {
                     if (isChecked){
-                        onTaskChange(checkBox,isChecked,position);
+                        onTaskChange(taskName,checkBox,isChecked,position);
                     }else {
                         studyViewHolder.materialRadioGroup.clearCheck();
                     }
                 }
             });
 
+            studyViewHolder.materialRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(MaterialRadioGroup group, int checkedId) {
+                    onTaskCheckChange(checkedId,position);
+
+                    if (checkedId!=-1 ){
+                        studyViewHolder.studyCheckBox.setVisibility(View.VISIBLE);
+                        studyViewHolder.studyCheckBox.setChecked(true);
+                    }
+                    ArrayList<String> arrayList = new ArrayList<String>();
+                    for (int i = 0; i < 10; i++) {
+
+                        arrayList.add("" + i + 1);
+                    }
+
+                    if (categoryDataBeanArrayList.get(position) instanceof TaskBean){
+
+                        String taskName = ((TaskBean) categoryDataBeanArrayList.get(position)).getTaskName();
+
+                        if (checkedId!=R.id.radio_not_read) {
+                            if (taskName.equalsIgnoreCase("Quran")) {
+                                populateQuanData(position);
+
+                            } else if (taskName.equalsIgnoreCase("Seerat")) {
+                                populateHadeesData(position);
+                            } else if (taskName.equalsIgnoreCase("Book")) {
+                                populateBookData(position);
+
+                            }else if(taskName.equalsIgnoreCase("Member")){
+                                populateMeetingData(position);
+                            }
+                        }
+                    }
+
+                }
+            });
+
+
         }else if(holder.getItemViewType()==Constants.TASK_TYPE_DISTRIBUTION ||
                 holder.getItemViewType()==Constants.TASK_TYPE_FAMILYPROGRAM ||
                 holder.getItemViewType()==Constants.TASK_TYPE_ATTENDANCE) {
 
-            DistributionFamiylViewHolder studyViewHolder = (DistributionFamiylViewHolder) holder;
-            TaskBean taskBean = (TaskBean) categoryDataBeanArrayList.get(position);
-            studyViewHolder.text_distribution_family.setText( taskBean.getTaskName());
+            DistributionFamiylViewHolder ditributionFamilyViewHolder = (DistributionFamiylViewHolder) holder;
+            final TaskBean taskBean = (TaskBean) categoryDataBeanArrayList.get(position);
+            ditributionFamilyViewHolder.text_distribution_family.setText( taskBean.getTaskName());
 
             if (categoryDataBeanArrayList.get(position) instanceof TaskBean){
 
                 if (((TaskBean) categoryDataBeanArrayList.get(position)).getStatus() == 1){
-                    studyViewHolder.smoothCheckBox.setChecked(true);
+                    ditributionFamilyViewHolder.smoothCheckBox.setChecked(true);
 
                 }
             }
 
-            studyViewHolder.smoothCheckBox.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
+            ditributionFamilyViewHolder.smoothCheckBox.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(SmoothCheckBox checkBox, boolean isChecked) {
-                    onTaskChange(checkBox,isChecked,position);
+                    onTaskChange(taskBean.getTaskName(),checkBox,isChecked,position);
                 }
             });
 
@@ -332,12 +450,8 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
         }else if(item.getItemId() == R.id.item_send) {
 
             mView.get().navigateActivity(new Intent(weakContext, SummaryActivity.class));
-
-
         }
-
-
-    }
+}
 
     @Override
     public void onDateSelected(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
@@ -363,11 +477,11 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
         if (categoryDataBeanArrayList.get(dataPosition) instanceof  TaskBean) {
 
             if (selectedPositionOne !=0){
-                ((TaskBean) categoryDataBeanArrayList.get(dataPosition)).setQuantity(selectedItem2);
+                ((TaskBean) categoryDataBeanArrayList.get(dataPosition)).setTaskExtras(selectedItem);
             }
 
             if (selectedPositionTwo !=0){
-                ((TaskBean) categoryDataBeanArrayList.get(dataPosition)).setTaskExtras(selectedItem);
+                ((TaskBean) categoryDataBeanArrayList.get(dataPosition)).setQuantity(selectedItem2);
             }
 
 
@@ -412,15 +526,15 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
             }
             else if (((TaskBean) categoryDataBeanArrayList.get(position)).getTaskType() == Constants.TASK_TYPE_STUDY){
 
-                if (checkedId == R.id.radio_after_tahajjud) {
-                    ((TaskBean) categoryDataBeanArrayList.get(position)).setSubTask(Constants.AFTER_TAHAJJUD);
-                    Toast.makeText(weakContext, "not tahajjud", Toast.LENGTH_SHORT).show();
+                if (checkedId == R.id.radio_tafseer) {
+                    ((TaskBean) categoryDataBeanArrayList.get(position)).setSubTask(Constants.READ_TAFSEER);
+                   // Toast.makeText(weakContext, "not tafseer", Toast.LENGTH_SHORT).show();
 
 
-                } else if (checkedId == R.id.radio_after_esha) {
-                    ((TaskBean) categoryDataBeanArrayList.get(position)).setSubTask(Constants.AFTER_ESHA);
+                } else if (checkedId == R.id.radio_recitation) {
+                    ((TaskBean) categoryDataBeanArrayList.get(position)).setSubTask(Constants.READ_RECITATION);
 
-                    Toast.makeText(weakContext, "not esha", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(weakContext, "not recitation", Toast.LENGTH_SHORT).show();
 
 
                 } else if (checkedId == R.id.radio_not_read) {
@@ -428,19 +542,47 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
                     Toast.makeText(weakContext, "not read", Toast.LENGTH_SHORT).show();
 
                     ((TaskBean) categoryDataBeanArrayList.get(position)).setSubTask(Constants.NOT_READ);
+                }else  if(checkedId == R.id.radio_read_only){
+
+                    Toast.makeText(weakContext, "read", Toast.LENGTH_SHORT).show();
+
+                    ((TaskBean) categoryDataBeanArrayList.get(position)).setSubTask(Constants.READ_ONLY);
+
+
                 }
             }
         }
 
     }
 
-
-    public void onTaskChange(SmoothCheckBox checBox,boolean isChecked,int position){
-        Toast.makeText(weakContext, "check change"+isChecked+position, Toast.LENGTH_SHORT).show();
+    public void onTaskChange(String taskName,SmoothCheckBox checBox,boolean isChecked,int position){
+        //Toast.makeText(weakContext, "check change"+isChecked+position, Toast.LENGTH_SHORT).show();
         if (categoryDataBeanArrayList.get(position) instanceof  TaskBean){
 
             ((TaskBean) categoryDataBeanArrayList.get(position)).setStatus(1);
-            //((TaskBean) categoryDataBeanArrayList.get(position)).setSubTask(1);
+
+            switch (taskName){
+                case "BookDistribution":
+                    ((TaskBean) categoryDataBeanArrayList.get(position)).setSubTask(Constants.BOOK_DISTRIBUTION);
+                    if (isChecked)
+                        populateDistributionData(position);
+                    break;
+                case "Family Program":
+                    ((TaskBean) categoryDataBeanArrayList.get(position)).setSubTask(Constants.FAMILY_PROGRAM);
+                    break;
+                case "Quran Circle":
+                    ((TaskBean) categoryDataBeanArrayList.get(position)).setSubTask(Constants.QURAN_CIRCLE);
+                    break;
+                case "Study Circle":
+                    ((TaskBean) categoryDataBeanArrayList.get(position)).setSubTask(Constants.STUDY_CIRCLE);
+                    break;
+                case  "Members Meeting":
+                    ((TaskBean) categoryDataBeanArrayList.get(position)).setSubTask(Constants.MEMBERS_MEETING);
+                    break;
+
+
+            }
+//            ((TaskBean) categoryDataBeanArrayList.get(position)).setSubTask(1);
         }
 
 
@@ -495,12 +637,14 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
 
                 int subTask = ((TaskBean) categoryDataBeanArrayList.get(position)).getSubTask();
 
-                if (subTask == Constants.AFTER_TAHAJJUD)
-                    studyViewHolder.radioButtonAfterTahjjud.setChecked(true);
-                else if  (subTask == Constants.AFTER_ESHA)
-                    studyViewHolder.radioButtonAfterEsha.setChecked(true);
+                if (subTask == Constants.READ_TAFSEER)
+                    studyViewHolder.radioButtonTafseer.setChecked(true);
+                else if  (subTask == Constants.READ_RECITATION)
+                    studyViewHolder.radioButtonRecitation.setChecked(true);
                 else if  (subTask == Constants.NOT_READ)
                     studyViewHolder.radioButtonNotRead.setChecked(true);
+                else if (subTask == Constants.READ_ONLY)
+                    studyViewHolder.getRadioButtonReadOnly.setChecked(true);
             }
         }
     }
@@ -523,6 +667,8 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
         numPagesData.add("1");
         numPagesData.add("2");
         numPagesData.add("3");
+        numPagesData.add("4");
+        numPagesData.add("5+");
 
         mView.get().showSpinnerDialog(rukuList,numPagesData,"Please select",position);
 
@@ -538,13 +684,15 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
         hadeesBooks.add("Select Hadees book");
         hadeesBooks.add("Hadith-1 Nabavi");
         hadeesBooks.add("Zaad e Raah");
-        hadeesBooks.add("Hayat-e-Tayyaba (saw)");
+        hadeesBooks.add("Other");
 
 
         numPagesData.add("Select Num of Pages");
         numPagesData.add("1");
         numPagesData.add("2");
         numPagesData.add("3");
+        numPagesData.add("4");
+        numPagesData.add("5+");
 
         mView.get().showSpinnerDialog(hadeesBooks,numPagesData,"Please select",position);
 
@@ -557,15 +705,68 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
         nisabBooks.add("Select Book");
         nisabBooks.add("Deenyaat");
         nisabBooks.add("Khutbaat");
-        nisabBooks.add("Tehreek Islami ki Ikhlaqi Bunyadein");
+        nisabBooks.add("Karkunon ky Bahami Taaluqaat");
+        nisabBooks.add("Islami Tehzeeb ki Usool o Mubadi");
+        nisabBooks.add("Rasail o Masail part 1");
+        nisabBooks.add("Debaacha + Muqadma ");
+        nisabBooks.add(" Nabi SAW ki seerat k numayan pehlu");
+        nisabBooks.add("Shahadat e Haq");
+        nisabBooks.add("Don’t Judge, Spread Salam");
+        nisabBooks.add("Apni Tarbeyat Kaisay Karain");
+        nisabBooks.add("Hayat-e-Tayyaba (saw)");
+        nisabBooks.add("Other");
+
 
 
         numPagesData.add("Select Num of Pages");
         numPagesData.add("1");
         numPagesData.add("2");
         numPagesData.add("3");
+        numPagesData.add("4");
+        numPagesData.add("5+");
+
 
         mView.get().showSpinnerDialog(nisabBooks,numPagesData,"Please select", position);
+
+    }
+
+    void populateMeetingData(int position){
+        ArrayList<String> personal =  new ArrayList<>();
+        ArrayList<String> online =  new ArrayList<>();
+
+        personal.add("Personal");
+        personal.add("1");
+        personal.add("2");
+        personal.add("3");
+        personal.add("4");
+        personal.add("5+");
+
+
+        online.add("Online");
+        online.add("1");
+        online.add("2");
+        online.add("3");
+        online.add("4");
+        online.add("5+");
+
+
+        mView.get().showSpinnerDialog(personal,online,"Number of members/Volunteer contacted?", position);
+
+    }
+
+    void populateDistributionData(int position){
+
+        ArrayList<String> bookDistribution =  new ArrayList<>();
+
+        bookDistribution.add("Number of books");
+        bookDistribution.add("1");
+        bookDistribution.add("2");
+        bookDistribution.add("3");
+        bookDistribution.add("4");
+        bookDistribution.add("5+");
+
+
+        mView.get().showSpinnerDialog(null,bookDistribution,"Number of books", position);
 
     }
 
