@@ -16,13 +16,13 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
 
 
 
-    public TextView categoryName;
+    public TextView categoryName,textview_date;
 
     public CategoryViewHolder(View itemView) {
         super(itemView);
 
         categoryName = (TextView) itemView.findViewById(R.id.categoryText);
-
+        textview_date= (TextView) itemView.findViewById(R.id.textview_date);
 
 
     }

@@ -20,7 +20,7 @@ public class StudyViewHolder extends RecyclerView.ViewHolder {
     public TextView studyTitle;
     public MaterialRadioGroup materialRadioGroup;
     public SmoothCheckBox studyCheckBox;
-    public MaterialRadioButton radioButtonTafseer, radioButtonRecitation,radioButtonNotRead,getRadioButtonReadOnly;
+    public MaterialRadioButton radioButtonTafseer, radioButtonRecitation,radioButtonNotRead,getRadioButtonReadOnly,radio_listen;
 
 
     public StudyViewHolder(View itemView) {
@@ -33,6 +33,7 @@ public class StudyViewHolder extends RecyclerView.ViewHolder {
         radioButtonRecitation = (MaterialRadioButton) itemView.findViewById(R.id.radio_tafseer);
         radioButtonNotRead = (MaterialRadioButton) itemView.findViewById(R.id.radio_not_read);
         getRadioButtonReadOnly = (MaterialRadioButton) itemView.findViewById(R.id.radio_read_only);
+        radio_listen = (MaterialRadioButton) itemView.findViewById(R.id.radio_listen);
 
         studyCheckBox.setVisibility(View.GONE);
         studyCheckBox.setEnabled(false);

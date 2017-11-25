@@ -2,11 +2,15 @@ package com.ibrahim.rozoshab.Main.SummaryActivity.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -31,9 +35,8 @@ import jxl.write.WriteException;
 
 public class SummaryActivity extends AppCompatActivity implements View.OnClickListener {
 
-
     Button export,send;
-
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,14 +44,26 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
 
         export = (Button) findViewById(R.id.btn_export);
         send = (Button) findViewById(R.id.btn_send);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         export.setOnClickListener(this);
         send.setOnClickListener(this);
 
+        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 //        System.setProperty("org.apache.poi.javax.xml.stream.XMLInputFactory", "com.fasterxml.aalto.stax.InputFactoryImpl");
 //        System.setProperty("org.apache.poi.javax.xml.stream.XMLOutputFactory", "com.fasterxml.aalto.stax.OutputFactoryImpl");
 //        System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory", "com.fasterxml.aalto.stax.EventFactoryImpl");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            finish();
+        }
+        return true;
     }
 
     @Override

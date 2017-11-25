@@ -3,9 +3,6 @@ package com.ibrahim.rozoshab.Main.MainActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Typeface;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.ibrahim.rozoshab.Bean.CategoryBean;
-import com.ibrahim.rozoshab.Bean.CategoryDataBean;
 import com.ibrahim.rozoshab.Bean.TaskBean;
 import com.ibrahim.rozoshab.Main.MainActivity.view.adapter.MainAdapter;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -39,11 +35,13 @@ public interface MainActivityContractor {
 
         void iniReportScreen();
 
-        void populateData(ArrayList<Object> categoryDataBeen, MainAdapter mainAdapter);
+        void populateData(ArrayList<Object> categoryDataBeen, MainAdapter mainAdapter, String taskDate);
 
         void showDatePicker();
 
         void navigateActivity(Intent intent);
+
+        void setToolbarTitle(String title);
 
         String showSpinnerDialog(ArrayList<String> data,ArrayList<String> data2, String title, int position);
 

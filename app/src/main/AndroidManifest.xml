@@ -29,7 +29,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Main.SummaryActivity.view.SummaryActivity">
+        <activity android:name=".Main.SummaryActivity.view.SummaryActivity"
+
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

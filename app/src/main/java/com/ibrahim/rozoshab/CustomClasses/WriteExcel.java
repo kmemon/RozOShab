@@ -215,6 +215,21 @@ public class WriteExcel {
                             }
                         }
 
+                        if (!tasks.get(k).getTaskExtras().equals(""))
+                            stringToWrite+= ","+tasks.get(k).getTaskExtras();
+                        if (!tasks.get(k).getQuantity().equals(""))
+                            stringToWrite+= ","+tasks.get(k).getQuantity();
+
+//                        if (tasks.get(k).getTaskName().equalsIgnoreCase("Quran") ||
+//                                tasks.get(k).getTaskName().equalsIgnoreCase("Seerat")||
+//                                tasks.get(k).getTaskName().equalsIgnoreCase("Book")){
+//
+//                            stringToWrite+= ","+tasks.get(k).getTaskExtras()+","+tasks.get(k).getQuantity();
+//
+//                        }else {
+//
+//
+//                        }
 
                         addLabel(excelSheet,i+2,count3,stringToWrite);
 

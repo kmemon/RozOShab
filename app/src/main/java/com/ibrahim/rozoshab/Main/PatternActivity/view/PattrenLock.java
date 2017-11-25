@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.andrognito.patternlockview.PatternLockView;
@@ -96,13 +97,19 @@ public class PattrenLock extends AppCompatActivity {
             });
 
             Button button = (Button) findViewById(R.id.set_pattern);
+              final EditText editText = (EditText) findViewById(R.id.edittext_username);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Paper.book().write(save_pattern_key,final_pattern);
-                    Toast.makeText(PattrenLock.this, "save pattern ", Toast.LENGTH_SHORT).show();
-                    finish();
+                    if (final_pattern!=null) {
 
+                        Paper.book().write(save_pattern_key, final_pattern);
+                        Paper.book().write("username", editText.getText().toString());
+                        Toast.makeText(PattrenLock.this, "save pattern ", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }else{
+                        Toast.makeText(PattrenLock.this, "Please set Pattern First", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 

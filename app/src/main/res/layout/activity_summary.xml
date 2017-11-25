@@ -18,6 +18,7 @@
             android:background="?attr/colorPrimary"
             app:titleTextColor="#FFF"
             app:title="Export"
+            app:theme="@style/ToolbarStyle"
             />
 
     </android.support.design.widget.AppBarLayout>

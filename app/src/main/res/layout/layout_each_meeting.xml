@@ -1,0 +1,93 @@
+<LinearLayout android:id="@+id/salah_main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/salah_fajar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+
+        >
+
+        <LinearLayout
+            android:id="@+id/salah_fajar_layout_inner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="20dp"
+            android:weightSum="5"
+
+            >
+
+            <TextView
+                android:id="@+id/textviewfajar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:text="Fajar"
+                android:textColor="#FFF"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_marginTop="15dp"
+
+                />
+
+
+            <LinearLayout
+                android:id="@+id/radiogroupfajar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <cn.refactor.library.SmoothCheckBox
+                    android:id="@+id/meet_check_box_personal"
+                    android:layout_width="50dp"
+                    android:layout_height="60dp"
+                    app:color_checked="#388E3C"
+                    />
+
+                <cn.refactor.library.SmoothCheckBox
+                    android:id="@+id/meet_check_box_online"
+                    android:layout_width="50dp"
+                    android:layout_height="60dp"
+                    app:color_checked="#388E3C"
+                    />
+
+
+
+                <cn.refactor.library.SmoothCheckBox
+                    android:id="@+id/meet_check_box_phone"
+                    android:layout_width="50dp"
+                    android:layout_height="60dp"
+                    app:color_checked="#388E3C"
+                    />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#FFF" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

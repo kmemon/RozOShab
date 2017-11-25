@@ -36,6 +36,10 @@
                 android:layout_height="35dp"
                 app:color_checked="#388E3C"
                 android:layout_weight="1.5"
+                android:visibility="gone"
+                android:layout_marginTop="15dp"
+
+
 
                 />
 
@@ -49,8 +53,7 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:paddingLeft="10dp"
-                android:layout_marginTop="5dp"
-
+                android:layout_marginTop="15dp"
 
                 />
 
@@ -70,7 +73,7 @@
                 <net.soulwolf.widget.materialradio.MaterialRadioButton
                     android:id="@+id/radio_tafseer"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_height="60dp"
                     soulwolf:mcAnimator="true"
                     soulwolf:mcButton="@drawable/radio_button_tahajjud_selector"
                     soulwolf:mcPadding="5dp"
@@ -78,10 +81,28 @@
                     soulwolf:mcTextColor="@drawable/radio_button_text_selector"
                     soulwolf:mcTextSize="6sp" />
 
+
+                <net.soulwolf.widget.materialradio.MaterialRadioButton
+                    android:id="@+id/radio_listen"
+                    android:layout_width="50dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="10dp"
+                    soulwolf:mcAnimator="true"
+                    soulwolf:mcButton="@drawable/radio_button_readonly_selector"
+                    soulwolf:mcPadding="5dp"
+                    soulwolf:mcText="two"
+                    soulwolf:mcTextColor="@drawable/radio_button_text_selector"
+                    soulwolf:mcTextSize="6sp"
+                    android:visibility="gone"
+
+                    />
+
+
+
                 <net.soulwolf.widget.materialradio.MaterialRadioButton
                     android:id="@+id/radio_recitation"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_height="60dp"
                     android:layout_marginLeft="10dp"
                     soulwolf:mcAnimator="true"
                     soulwolf:mcButton="@drawable/radio_button_esha_selector"
@@ -93,7 +114,7 @@
                 <net.soulwolf.widget.materialradio.MaterialRadioButton
                     android:id="@+id/radio_read_only"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_height="60dp"
                     android:layout_marginLeft="10dp"
                     soulwolf:mcAnimator="true"
                     soulwolf:mcButton="@drawable/radio_button_readonly_selector"
@@ -108,7 +129,7 @@
                 <net.soulwolf.widget.materialradio.MaterialRadioButton
                     android:id="@+id/radio_not_read"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_height="60dp"
                     android:layout_marginLeft="10dp"
                     soulwolf:mcAnimator="true"
                     soulwolf:mcButton="@drawable/radio_button_notread_selector"

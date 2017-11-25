@@ -36,9 +36,12 @@ import net.soulwolf.widget.materialradio.listener.OnCheckedChangeListener;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
+import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import cn.refactor.library.SmoothCheckBox;
 
@@ -217,6 +220,20 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
             CategoryBean category = (CategoryBean) categoryDataBeanArrayList.get(position);
             categoryViewHolder.categoryName.setText(category.getCategoryName());
 
+            if (categoryDataBeanArrayList.get(1) instanceof  TaskBean){
+                String date = ((TaskBean)categoryDataBeanArrayList.get(1)).getTaskDate();
+                String monthName =  getMonthName(Integer.parseInt(date.split("-")[1]));
+
+//                Format formatter = new SimpleDateFormat("MMMM");
+//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+//                String s = null;
+//                try {
+//                    s = formatter.format(dateFormat.parse("11-16-2017"));
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+                categoryViewHolder.textview_date.setText(date.split("-")[0]+ " "+ monthName +" " + date.split("-")[2]);
+            }
 
         }else if(holder.getItemViewType()==Constants.TASK_TYPE_SALAH || holder.getItemViewType()==Constants.TASK_TYPE_MEETING){
 
@@ -296,16 +313,17 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
             }
 
             else if (taskName.equalsIgnoreCase("Seerat")){
-                studyViewHolder.radioButtonTafseer.setVisibility(View.INVISIBLE);
+                studyViewHolder.radioButtonTafseer.setVisibility(View.GONE);
                 studyViewHolder.radioButtonRecitation.setVisibility(View.GONE);
                 studyViewHolder.getRadioButtonReadOnly.setVisibility(View.VISIBLE);
-
+                studyViewHolder.radio_listen.setVisibility(View.VISIBLE);
             }
 
             else if (taskName.equalsIgnoreCase("Book")){
-                studyViewHolder.radioButtonTafseer.setVisibility(View.INVISIBLE);
+                studyViewHolder.radioButtonTafseer.setVisibility(View.GONE);
                 studyViewHolder.radioButtonRecitation.setVisibility(View.GONE);
                 studyViewHolder.getRadioButtonReadOnly.setVisibility(View.VISIBLE);
+                studyViewHolder.radio_listen.setVisibility(View.VISIBLE);
 
 
             }
@@ -605,7 +623,10 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
                     categoryDataBeanArrayList.add(task);
             }
         }
-            mView.get().populateData(categoryDataBeanArrayList,mainAdapter);
+            String monthName =  getMonthName(Integer.parseInt(tasksList.get(0).getTaskDate().split("-")[1]));
+            mView.get().populateData(categoryDataBeanArrayList,mainAdapter,tasksList.get(0).getTaskDate().split("-")[1]+monthName);
+
+           // mView.get().setToolbarTitle(tasksList.get(0).getTaskDate());
 
     }
 
@@ -625,7 +646,19 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
                             salatViewHolder.radioButtonQaza.setChecked(true);
             }
         }
+    }
 
+
+    String getMonthName (int month){
+
+        switch (month){
+
+            case 1:return "Jan";
+            default: return "Nov";
+
+
+
+        }
 
     }
 
@@ -652,121 +685,121 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
     void populateQuanData(int position){
 
 
-        ArrayList<String> rukuList =  new ArrayList<>();
-        ArrayList<String> numPagesData =  new ArrayList<>();
-
-
-        rukuList.add("Select Ruku");
-        rukuList.add("1 ruku");
-        rukuList.add("2 ruku");
-        rukuList.add("3 ruku");
-        rukuList.add("More than 5 ruku");
-
-
-        numPagesData.add("Select Num of Pages");
-        numPagesData.add("1");
-        numPagesData.add("2");
-        numPagesData.add("3");
-        numPagesData.add("4");
-        numPagesData.add("5+");
-
-        mView.get().showSpinnerDialog(rukuList,numPagesData,"Please select",position);
+//        ArrayList<String> rukuList =  new ArrayList<>();
+//        ArrayList<String> numPagesData =  new ArrayList<>();
+//
+//
+//        rukuList.add("Select Ruku");
+//        rukuList.add("1 ruku");
+//        rukuList.add("2 ruku");
+//        rukuList.add("3 ruku");
+//        rukuList.add("More than 5 ruku");
+//
+//
+//        numPagesData.add("Select Num of Pages");
+//        numPagesData.add("1");
+//        numPagesData.add("2");
+//        numPagesData.add("3");
+//        numPagesData.add("4");
+//        numPagesData.add("5+");
+//
+//        mView.get().showSpinnerDialog(rukuList,numPagesData,"Please select",position);
 
 
     }
 
     void populateHadeesData(int position){
 
-        ArrayList<String> hadeesBooks =  new ArrayList<>();
-        ArrayList<String> numPagesData =  new ArrayList<>();
-
-
-        hadeesBooks.add("Select Hadees book");
-        hadeesBooks.add("Hadith-1 Nabavi");
-        hadeesBooks.add("Zaad e Raah");
-        hadeesBooks.add("Other");
-
-
-        numPagesData.add("Select Num of Pages");
-        numPagesData.add("1");
-        numPagesData.add("2");
-        numPagesData.add("3");
-        numPagesData.add("4");
-        numPagesData.add("5+");
-
-        mView.get().showSpinnerDialog(hadeesBooks,numPagesData,"Please select",position);
+//        ArrayList<String> hadeesBooks =  new ArrayList<>();
+//        ArrayList<String> numPagesData =  new ArrayList<>();
+//
+//
+//        hadeesBooks.add("Select Hadees book");
+//        hadeesBooks.add("Hadith-1 Nabavi");
+//        hadeesBooks.add("Zaad e Raah");
+//        hadeesBooks.add("Other");
+//
+//
+//        numPagesData.add("Select Num of Pages");
+//        numPagesData.add("1");
+//        numPagesData.add("2");
+//        numPagesData.add("3");
+//        numPagesData.add("4");
+//        numPagesData.add("5+");
+//
+//        mView.get().showSpinnerDialog(hadeesBooks,numPagesData,"Please select",position);
 
     }
 
     void populateBookData(int position){
-        ArrayList<String> nisabBooks =  new ArrayList<>();
-        ArrayList<String> numPagesData =  new ArrayList<>();
-
-        nisabBooks.add("Select Book");
-        nisabBooks.add("Deenyaat");
-        nisabBooks.add("Khutbaat");
-        nisabBooks.add("Karkunon ky Bahami Taaluqaat");
-        nisabBooks.add("Islami Tehzeeb ki Usool o Mubadi");
-        nisabBooks.add("Rasail o Masail part 1");
-        nisabBooks.add("Debaacha + Muqadma ");
-        nisabBooks.add(" Nabi SAW ki seerat k numayan pehlu");
-        nisabBooks.add("Shahadat e Haq");
-        nisabBooks.add("Don’t Judge, Spread Salam");
-        nisabBooks.add("Apni Tarbeyat Kaisay Karain");
-        nisabBooks.add("Hayat-e-Tayyaba (saw)");
-        nisabBooks.add("Other");
-
-
-
-        numPagesData.add("Select Num of Pages");
-        numPagesData.add("1");
-        numPagesData.add("2");
-        numPagesData.add("3");
-        numPagesData.add("4");
-        numPagesData.add("5+");
-
-
-        mView.get().showSpinnerDialog(nisabBooks,numPagesData,"Please select", position);
+//        ArrayList<String> nisabBooks =  new ArrayList<>();
+//        ArrayList<String> numPagesData =  new ArrayList<>();
+//
+//        nisabBooks.add("Select Book");
+//        nisabBooks.add("Deenyaat");
+//        nisabBooks.add("Khutbaat");
+//        nisabBooks.add("Karkunon ky Bahami Taaluqaat");
+//        nisabBooks.add("Islami Tehzeeb ki Usool o Mubadi");
+//        nisabBooks.add("Rasail o Masail part 1");
+//        nisabBooks.add("Debaacha + Muqadma ");
+//        nisabBooks.add(" Nabi SAW ki seerat k numayan pehlu");
+//        nisabBooks.add("Shahadat e Haq");
+//        nisabBooks.add("Don’t Judge, Spread Salam");
+//        nisabBooks.add("Apni Tarbeyat Kaisay Karain");
+//        nisabBooks.add("Hayat-e-Tayyaba (saw)");
+//        nisabBooks.add("Other");
+//
+//
+//
+//        numPagesData.add("Select Num of Pages");
+//        numPagesData.add("1");
+//        numPagesData.add("2");
+//        numPagesData.add("3");
+//        numPagesData.add("4");
+//        numPagesData.add("5+");
+//
+//
+//        mView.get().showSpinnerDialog(nisabBooks,numPagesData,"Please select", position);
 
     }
 
     void populateMeetingData(int position){
-        ArrayList<String> personal =  new ArrayList<>();
-        ArrayList<String> online =  new ArrayList<>();
-
-        personal.add("Personal");
-        personal.add("1");
-        personal.add("2");
-        personal.add("3");
-        personal.add("4");
-        personal.add("5+");
-
-
-        online.add("Online");
-        online.add("1");
-        online.add("2");
-        online.add("3");
-        online.add("4");
-        online.add("5+");
-
-
-        mView.get().showSpinnerDialog(personal,online,"Number of members/Volunteer contacted?", position);
+//        ArrayList<String> personal =  new ArrayList<>();
+//        ArrayList<String> online =  new ArrayList<>();
+//
+//        personal.add("Personal");
+//        personal.add("1");
+//        personal.add("2");
+//        personal.add("3");
+//        personal.add("4");
+//        personal.add("5+");
+//
+//
+//        online.add("Online");
+//        online.add("1");
+//        online.add("2");
+//        online.add("3");
+//        online.add("4");
+//        online.add("5+");
+//
+//
+//        mView.get().showSpinnerDialog(personal,online,"Number of members/Volunteer contacted?", position);
 
     }
 
     void populateDistributionData(int position){
 
-        ArrayList<String> bookDistribution =  new ArrayList<>();
-
-        bookDistribution.add("Number of books");
-        bookDistribution.add("1");
-        bookDistribution.add("2");
-        bookDistribution.add("3");
-        bookDistribution.add("4");
-        bookDistribution.add("5+");
-
-
-        mView.get().showSpinnerDialog(null,bookDistribution,"Number of books", position);
+//        ArrayList<String> bookDistribution =  new ArrayList<>();
+//
+//        bookDistribution.add("Number of books");
+//        bookDistribution.add("1");
+//        bookDistribution.add("2");
+//        bookDistribution.add("3");
+//        bookDistribution.add("4");
+//        bookDistribution.add("5+");
+//
+//
+//        mView.get().showSpinnerDialog(null,bookDistribution,"Number of books", position);
 
     }
 

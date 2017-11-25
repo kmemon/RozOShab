@@ -37,6 +37,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import io.paperdb.Paper;
+
 public class MainActivity extends AppCompatActivity implements
         MainActivityContractor.PresenterToView,DatePickerDialog.OnDateSetListener,View.OnClickListener{
 
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements
     Calendar calendar;
     Button btn_submit;
     Toolbar toolbar;
-
+    TextView textview_date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements
         year =  calendar.get(Calendar.YEAR);
         month =  calendar.get(Calendar.MONTH);
         day =  calendar.get(Calendar.DAY_OF_MONTH);
-
+        //Toast.makeText(this, Paper.book().read("username").toString(), Toast.LENGTH_SHORT).show();
 
 
 
@@ -74,14 +76,13 @@ public class MainActivity extends AppCompatActivity implements
         btn_submit = (Button) findViewById(R.id.btn_submit);
         btn_submit.setOnClickListener(this);
         mTextMessage = (TextView) findViewById(R.id.message);
-       // radioGroup = (MaterialRadioGroup) findViewById(R.id.radiogroupfajar);
+        textview_date = (TextView) findViewById(R.id.textview_date);
         recyclerView = (RecyclerView) findViewById(R.id.mainRecycler);
 
         recyclerView.setNestedScrollingEnabled(false);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
 
         getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar));
 
@@ -180,8 +181,10 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void populateData(ArrayList<Object> categoryDataBeen, MainAdapter mainAdapter) {
+    public void populateData(ArrayList<Object> categoryDataBeen, MainAdapter mainAdapter, String taskDate) {
         recyclerView.setAdapter(mainAdapter);
+        textview_date.setText(taskDate);
+
 
 
 
@@ -200,6 +203,14 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void navigateActivity(Intent intent) {
         startActivity(intent);
+    }
+
+    @Override
+    public void setToolbarTitle(String title) {
+
+        textview_date.setVisibility(View.GONE);
+        getSupportActionBar().setTitle(getSupportActionBar().getTitle() +"  "+ title);
+
     }
 
     @Override

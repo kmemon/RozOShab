@@ -7,14 +7,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Main.MainActivity.view.MainActivity"
-    android:background="@drawable/bg_img"
-  >
-
+    android:background="@drawable/bg_img">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       >
+        android:id="@+id/appbarlauoyt"
+        app:layout_scrollFlags="scroll|enterAlways"
+        >
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -22,25 +22,51 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:titleTextColor="#FFF"
+            app:layout_scrollFlags="scroll|enterAlways"
             />
+
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
+
 
     <RelativeLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+       >
+
+        <TextView
+            android:id="@+id/textview_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#43A047"
+            android:padding="10dp"
+            android:text="Date"
+            android:textColor="#FFF"
+            android:textSize="18dp"
+            android:visibility="gone"
+            />
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/textview_date"
+
+            >
+            <RelativeLayout
+                android:id="@+id/content_two"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
 
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/mainRecycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             >
 
         </android.support.v7.widget.RecyclerView>
@@ -71,9 +97,11 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:visibility="gone"
             />
+            </RelativeLayout>
+        </android.support.v4.widget.NestedScrollView>
 
     </RelativeLayout>
-    </android.support.v4.widget.NestedScrollView>
+
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
