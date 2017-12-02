@@ -51,6 +51,27 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
+
+                <com.codeogenic.checkablebutton.CheckableButton
+                    android:id="@+id/btn1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:cb_checkedborderWidth="5dp"
+                    app:cb_checkedBorderColor="@color/peach"
+                    app:cb_checkedTextColor="@color/white"
+                    app:cb_radius="30dp"
+                    app:cb_text="btn1"
+                    android:background="@drawable/listen"
+                    app:cb_textSize="10pt"
+                    app:cb_borderWidth="4dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:layout_span="1"
+                    android:layout_gravity="center_vertical|center_horizontal" />
+
+
                 <cn.refactor.library.SmoothCheckBox
                     android:id="@+id/meet_check_box_personal"
                     android:layout_width="50dp"

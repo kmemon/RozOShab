@@ -25,6 +25,9 @@ public class Constants {
     public static int STUDY_CIRCLE = 14;
     public static int MEMBERS_MEETING = 15;
 
+    //added in 2nd release
+    public static int LISTEN = 16;
+
 
     public static int TASK_TYPE_SALAH = 1;
     public static int TASK_TYPE_STUDY = 2;

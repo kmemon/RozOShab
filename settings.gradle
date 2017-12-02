@@ -1,1 +1,1 @@
-include ':app', ':library', ':checkboxlibrary'
+include ':app', ':library', ':checkboxlibrary', ':checkablebutton'

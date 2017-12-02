@@ -175,7 +175,6 @@ public class WriteExcel {
                                     stringToWrite = "PH";
                                     break;
                                 }
-
                                 case 7:{
                                     stringToWrite = " ";
                                     break;
@@ -212,13 +211,17 @@ public class WriteExcel {
                                     stringToWrite = "Y";
                                     break;
                                 }
+                                case 16:{
+                                    stringToWrite = "L";
+                                    break;
+                                }
                             }
                         }
 
-                        if (!tasks.get(k).getTaskExtras().equals(""))
-                            stringToWrite+= ","+tasks.get(k).getTaskExtras();
-                        if (!tasks.get(k).getQuantity().equals(""))
-                            stringToWrite+= ","+tasks.get(k).getQuantity();
+//                        if (!tasks.get(k).getTaskExtras().equals(""))
+//                            stringToWrite+= ","+tasks.get(k).getTaskExtras();
+//                        if (!tasks.get(k).getQuantity().equals(""))
+//                            stringToWrite+= ","+tasks.get(k).getQuantity();
 
 //                        if (tasks.get(k).getTaskName().equalsIgnoreCase("Quran") ||
 //                                tasks.get(k).getTaskName().equalsIgnoreCase("Seerat")||

@@ -567,6 +567,13 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
                     ((TaskBean) categoryDataBeanArrayList.get(position)).setSubTask(Constants.READ_ONLY);
 
 
+                }else  if(checkedId == R.id.radio_listen){
+
+                    Toast.makeText(weakContext, "listen", Toast.LENGTH_SHORT).show();
+
+                    ((TaskBean) categoryDataBeanArrayList.get(position)).setSubTask(Constants.LISTEN);
+
+
                 }
             }
         }
@@ -654,7 +661,18 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
         switch (month){
 
             case 1:return "Jan";
-            default: return "Nov";
+            case 2:return "Feb";
+            case 3:return "Mar";
+            case 4:return "April";
+            case 5:return "May";
+            case 6:return "June";
+            case 7:return "July";
+            case 8:return "Aug";
+            case 9:return "Sep";
+            case 10:return "Oct";
+            case 11:return "Nov";
+            case 12:return "Dec";
+            default: return "";
 
 
 
@@ -678,6 +696,9 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
                     studyViewHolder.radioButtonNotRead.setChecked(true);
                 else if (subTask == Constants.READ_ONLY)
                     studyViewHolder.getRadioButtonReadOnly.setChecked(true);
+                else if (subTask == Constants.LISTEN)
+                    studyViewHolder.radio_listen.setChecked(true);
+
             }
         }
     }
