@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/checkablebutton/checkablebutton.iml" filepath="$PROJECT_DIR$/checkablebutton/checkablebutton.iml" />
       <module fileurl="file://$PROJECT_DIR$/checkboxlibrary/checkboxlibrary.iml" filepath="$PROJECT_DIR$/checkboxlibrary/checkboxlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lovelydialog/lovelydialog.iml" filepath="$PROJECT_DIR$/lovelydialog/lovelydialog.iml" />
     </modules>
   </component>
 </project>

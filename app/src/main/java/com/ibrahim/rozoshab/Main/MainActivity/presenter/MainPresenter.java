@@ -479,7 +479,7 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
         Calendar calender = Calendar.getInstance();
         calender.set(year,monthOfYear,dayOfMonth);
 
-        String formattedDate = new SimpleDateFormat("dd-MM-yyyy").format(calender.getTime());
+        String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(calender.getTime());
 
 
         model.getTasks(formattedDate);
@@ -673,8 +673,6 @@ public class MainPresenter implements MainActivityContractor.ViewToPresenter,
             case 11:return "Nov";
             case 12:return "Dec";
             default: return "";
-
-
 
         }
 

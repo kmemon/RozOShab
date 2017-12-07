@@ -268,7 +268,6 @@ public class MainActivity extends AppCompatActivity implements
             ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data1);
             ArrayAdapter<String> stringArrayAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data2);
 
-
             spinner.setAdapter(stringArrayAdapter);
             spinner2.setAdapter(stringArrayAdapter2);
         }else if (data1==null){
@@ -282,12 +281,6 @@ public class MainActivity extends AppCompatActivity implements
             spinner.setAdapter(stringArrayAdapter);
 
         }
-
-
-
-
-
-
         builder.setView(mview);
         builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
             @Override

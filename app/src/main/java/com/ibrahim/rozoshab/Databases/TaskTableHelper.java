@@ -345,6 +345,34 @@ public class TaskTableHelper {
         return weektasksList;
     }
 
+
+    public ArrayList<String> getDaysByMonthYear(int month, int year){
+
+        ArrayList<String> distinctDates = new ArrayList<>();
+
+        //String query = "select distinct date from tbl_tasks order by date";
+
+        String query = "select distinct date from tbl_tasks WHERE strftime('%m', date) = '"
+                +month +"' AND strftime('%Y', date) = '"+year+"' ";
+
+        Log.i("query", "getDaysByMonthYear: " + query);
+
+        Cursor cursor = db.rawQuery(query,null);
+
+        if (cursor.getCount() > 0){
+            while (cursor.moveToNext()){
+
+                distinctDates.add(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TASK_DATE)));
+
+            }
+
+        }
+
+        return distinctDates;
+
+    }
+
+
     public ArrayList<String> getAllDays(){
 
         ArrayList<String> distinctDates = new ArrayList<>();

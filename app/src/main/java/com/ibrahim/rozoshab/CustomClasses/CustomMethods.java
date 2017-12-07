@@ -21,18 +21,51 @@ public class CustomMethods {
 
         Calendar calendar = Calendar.getInstance();
         Date today = calendar.getTime();
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String todayAsString = dateFormat.format(today);
         Log.i("dateToday",todayAsString);
 
         return todayAsString;
     }
+
+    public static int getCurrentYear(){
+
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+
+        return year;
+    }
+    public static String getMonthName (int month){
+
+        switch (month){
+
+            case 1:return "Jan";
+            case 2:return "Feb";
+            case 3:return "Mar";
+            case 4:return "April";
+            case 5:return "May";
+            case 6:return "June";
+            case 7:return "July";
+            case 8:return "Aug";
+            case 9:return "Sep";
+            case 10:return "Oct";
+            case 11:return "Nov";
+            case 12:return "Dec";
+            default: return "";
+
+        }
+
+    }
+
+
+
+
     public static String getDateYesterday(){
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, -1);
         Date today = calendar.getTime();
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String todayAsString = dateFormat.format(today);
         Log.i("dateToday",todayAsString);
 
@@ -44,7 +77,7 @@ public class CustomMethods {
         calendar.add(Calendar.DAY_OF_YEAR, +1);
 
         Date today = calendar.getTime();
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String todayAsString = dateFormat.format(today);
         Log.i("dateToday",todayAsString);
 
@@ -57,7 +90,7 @@ public class CustomMethods {
         calendar.add(Calendar.DAY_OF_YEAR, num);
 
         Date today = calendar.getTime();
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String todayAsString = dateFormat.format(today);
         Log.i("dateToday",todayAsString);
 

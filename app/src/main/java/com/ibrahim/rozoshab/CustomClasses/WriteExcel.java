@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import io.paperdb.Paper;
 import jxl.CellView;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
@@ -46,7 +47,8 @@ public class WriteExcel {
     int count1 = 0,count2 = 1, count3 = 1;
 
     WritableWorkbook workbook ;
-    WritableSheet excelSheet ;
+    WritableSheet excelSheet;
+    WritableSheet bioDataSheet ;
     WorkbookSettings wbSettings;
 
     public WriteExcel(Context context,String inputFile){
@@ -55,30 +57,46 @@ public class WriteExcel {
         categoryTableHelper = new CategoryTableHelper(context);
         File file = new File(Environment.getExternalStorageDirectory(),inputFile);
         this.file = file;
+         wbSettings = new WorkbookSettings();
+        Paper.init(context);
 
-        wbSettings = new WorkbookSettings();
-        //prepareData();
+         //prepareData();
 
     }
 
-    public void prepareData(){
-
-
+    public void prepareData(ArrayList<String> distinctDates,String monthName){
         try {
             workbook = Workbook.createWorkbook(file, wbSettings);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        workbook.createSheet("Report", 0);
-        excelSheet = workbook.getSheet(0);
+        workbook.createSheet("Bio Data",0);
+        workbook.createSheet("Report", 1);
 
-        
-        ArrayList<String> distinctDates = taskTableHelper.getAllDays();
+        bioDataSheet = workbook.getSheet(0);
+        excelSheet = workbook.getSheet(1);
+
+//        ArrayList<String> distinctDates = taskTableHelper.getAllDays();
         ArrayList<CategoryBean> categories = categoryTableHelper.getCategories();
 
         try {
             createLabel(excelSheet);
+        } catch (WriteException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            addCaption(bioDataSheet,0,0,"Report Month : " + monthName);
+            addLabel(bioDataSheet,0,1,"Name : ");
+            addLabel(bioDataSheet,0,2,"Email : ");
+            addLabel(bioDataSheet,0,3,"Contact Number");
+            addLabel(bioDataSheet,0,4,"Country : ");
+            addLabel(bioDataSheet,0,5,"Age :");
+            addLabel(bioDataSheet,0,6,"Profession/Class :");
+            addLabel(bioDataSheet,0,7,"Living Area :");
+            addLabel(bioDataSheet,0,8,"RelationShip With Ican :");
+
         } catch (WriteException e) {
             e.printStackTrace();
         }

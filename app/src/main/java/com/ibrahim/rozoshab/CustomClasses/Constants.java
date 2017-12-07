@@ -40,5 +40,16 @@ public class Constants {
 
     public static String FILE_NAME = "RozoShab Report.xls";
 
+    public static String NAME = "Name";
+    public static String EMAIL = "Email";
+    public static String CONTACTNUMBER = "ContactNumber";
+    public static String COUNTRY = "Country";
+    public static String AGE = "Age";
+    public static String PROFESSION = "Profession";
+    public static String LIVINGAREA = "LivingArea";
+    public static String RELATIONSHIP = "RelationShip";
+
+
+
 
 }

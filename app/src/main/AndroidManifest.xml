@@ -42,14 +42,19 @@
         </activity>
 
         <activity android:name=".Main.PatternActivity.view.PattrenLock">
+
+        </activity>
+
+
+        <activity android:name=".Main.SignInForm.UserInputActivity.InputDetail">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-
-
 
 
 

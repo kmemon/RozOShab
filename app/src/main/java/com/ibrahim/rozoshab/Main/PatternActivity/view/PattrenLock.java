@@ -102,7 +102,6 @@ public class PattrenLock extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (final_pattern!=null) {
-
                         Paper.book().write(save_pattern_key, final_pattern);
                         Paper.book().write("username", editText.getText().toString());
                         Toast.makeText(PattrenLock.this, "save pattern ", Toast.LENGTH_SHORT).show();

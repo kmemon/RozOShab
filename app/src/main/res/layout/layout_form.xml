@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FAFAFA"
+            >
+
+
+            <LinearLayout
+                android:id="@+id/layout_social_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="20dp"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:id="@+id/layout_signup_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:paddingBottom="2dp"
+                    android:orientation="vertical"
+                    >
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/user_layout_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_marginTop="20dp"
+
+                        >
+
+                        <EditText
+                            android:id="@+id/editext_user_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="First and Last Name" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/user_layout_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/user_layout_name"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        >
+
+                        <EditText
+                            android:id="@+id/editext_user_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Email" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/user_layout_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:inputType="textPassword"
+                        >
+
+                        <EditText
+                            android:id="@+id/editext_user_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Password"
+                            android:inputType="textPassword"
+                            />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/user_layout_age"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:layout_marginTop="20dp"
+                            >
+
+                            <EditText
+                                android:id="@+id/editext_user_age"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Age"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:layout_marginTop="20dp"
+                                />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/user_layout_gender"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+
+                            >
+
+                            <EditText
+                                android:id="@+id/editext_user_gender"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Gender"
+
+                                />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+
+</RelativeLayout>
